@@ -52,13 +52,13 @@
     <header class="h-12 bg-gray-100 border-b border-gray-200 hidden sm:block">
         <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-center">
             <nav class="flex items-stretch h-full">
-                <a href="../Beneficiarios/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
-                    <span class="text-sm">Beneficiários e obras</span>
+                <a href="../Obras/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                    <span class="text-sm">Obras</span>
                 </a>
                 <a href="../Unidades/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full relative border-b-2 border-orange-600 text-black font-medium">
                     <span class="text-sm">Unidades de medida</span>
                 </a>
-                <a href="../Categoria/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                <a href="../Categorias/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Categoria de materiais</span>
                 </a>
                 <a href="../Relatorios/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
@@ -91,7 +91,7 @@
                     <option>Inativos</option>
                 </select>
                 
-                <!-- Botão Novo Cliente -->
+                <!-- Botão Novo -->
                 <a href="cadastro.html" class="w-full sm:w-auto">
                     <button class="w-full px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg text-sm font-medium flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -106,28 +106,28 @@
         <!-- Tabela Responsiva -->
         <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
             <table class="responsive-table min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 hidden sm:table-header-group">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Abreviação</th>
                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td data-label="Nome" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Zé do peixe Rodrigues Santos Sousa Silva</td>
-                        <td data-label="CPF" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">123.456.789.10</td>
-                        <td data-label="Telefone" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">(11) 99999-9999</td>
-                        <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                            <div class="flex justify-end space-x-3">
+                    <tr class="block sm:table-row">
+                        <td data-label="Nome" class="px-6 py-4 block sm:table-cell sm:whitespace-nowrap text-sm font-medium text-gray-900 before:content-[attr(data-label)] sm:before:content-none font-bold sm:font-normal">
+                            Kilo
+                        </td>
+                        <td data-label="Abreviação" class="px-6 py-4 block sm:table-cell sm:whitespace-nowrap text-sm text-gray-600 before:content-[attr(data-label)] sm:before:content-none">
+                            Kg
+                        </td>
+                        <td data-label="Ações" class="px-6 py-4 block sm:table-cell text-sm text-gray-500 sm:text-right before:content-[attr(data-label)] sm:before:content-none">
+                            <div class="flex sm:justify-end space-x-3">
                                 <button class="text-blue-600 hover:text-blue-800">Editar</button>
                                 <button class="text-red-600 hover:text-red-800">Excluir</button>
-                                <button onclick="openModal()" class="text-green-600 hover:text-green-800 font-medium">Cadastrar Material</button>
                             </div>
                         </td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
@@ -208,11 +208,11 @@
 
     <!-- Mobile Bottom Navigation -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex sm:hidden z-20">
-        <a href="../Beneficiarios/index.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
+        <a href="../Obras/index.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <span class="text-xs mt-1">Beneficiários</span>
+            <span class="text-xs mt-1">Obras</span>
         </a>
         <a href="../Unidades/index.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-primary-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -220,13 +220,13 @@
             </svg>
             <span class="text-xs mt-1">Unidades</span>
         </a>
-        <a href="orcamentos.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
+        <a href="../Categorias/index.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
             <span class="text-xs mt-1">Categorias</span>
         </a>
-        <a href="relatorios.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
+        <a href="../Relatorios/index.html" class="flex flex-col items-center justify-center py-3 px-4 flex-grow text-gray-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
