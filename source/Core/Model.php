@@ -34,18 +34,20 @@ abstract class Model
     /** @var array $entity database table */
     protected static $required;
 
+    // protected string $id = "id";
+
     /**
      * Model constructor.
      * @param string $entity database table name
      * @param array $protected table protected columns
      * @param array $required table required columns
      */
-    public function __construct(string $entity, array $protected, array $required)
+    public function __construct(string $entity, array $protected, array $required, string $id = "id")
     {
         self::$entity = $entity;
         self::$protected = array_merge($protected, ['data_cadastro', "data_atualizacao"]);
         self::$required = $required;
-
+        $this->id = $id;
         $this->message = new Message();
     }
 
@@ -118,7 +120,7 @@ abstract class Model
 
     public function findById(int $id, string $columns = "*"): ?Model
     {
-        $find = $this->find("id = :id", "id={$id}", $columns);
+        $find = $this->find( $this->id . " = :id", "id={$id}", $columns);
         return $find->fetch();
     }
 
@@ -222,10 +224,13 @@ abstract class Model
             return false;
         }
 
+        $primaryKey = $this->id;
+
         // Atualizar
-        if (!empty($this->id)) {
-            $id = $this->id;
-            $this->update($this->safe(), "id = :id", "id={$id}");
+        if (!empty($this->$primaryKey)) {
+            $id = $this->$primaryKey;
+            
+            $this->update($this->safe(), $this->id . " = :id", "id={$id}");
             if ($this->fail()) {
                 $this->message->error("Erro ao atualizar, verifique os dados");
                 return false;
@@ -233,13 +238,15 @@ abstract class Model
         }
 
         // Criar
-        if (empty($this->id)) {
+        if (empty($this->$primaryKey)) {
             $id = $this->create($this->safe());
+            
             if ($this->fail()) {
                 $this->message->error("Erro ao cadastrar, verifique os dados");
                 return false;
             }
         }
+        
         $this->data = $this->findById($id)->data();
         return true;
     }
@@ -274,7 +281,7 @@ abstract class Model
             return false;
         }
 
-        $destroy = $this->delete("id = :id", "id={$this->id}");
+        $destroy = $this->delete( $this->id . " = :id", "id={$this->id}");
         return $destroy;
     }
 
@@ -284,6 +291,11 @@ abstract class Model
     protected function safe(): ?array
     {
         $safe = (array)$this->data;
+
+        if (isset($safe['id']) && $safe['id'] === $this->id) {
+            unset($safe['id']);
+        }
+
         foreach (static::$protected as $unset) {
             unset($safe[$unset]);
         }

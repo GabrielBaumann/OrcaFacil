@@ -3,18 +3,27 @@
 namespace Source\App;
 
 use Source\Core\Controller;
+use Source\Models\Auth;
 
 class App extends Controller
 {
+    private $user;
+
     public function __construct()
     {
         parent::__construct(__DIR__ . "/../../themes/". CONF_VIEW_APP ."/");
+
+        if (!$this->user = Auth::user()) {
+            $this->message->warning("Efetue login para acessar o sistema.")->flash();
+            redirect("/");
+        }
+
     }
 
     public function start(): void
     {
         var_dump("App");
-    
+        echo "Sair";
         // echo $this->view->render("", [
 
         // ]);

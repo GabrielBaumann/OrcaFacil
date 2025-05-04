@@ -4,6 +4,8 @@ namespace Source\App;
 
 use Source\Core\Controller;
 use Source\Models\Auth;
+use Source\Models\User;
+
 
 class Web extends Controller
 {
@@ -15,9 +17,6 @@ class Web extends Controller
     public function login(?array $data) : void
     {
 
-        $auth = (new Auth())->find();
-        var_dump($auth->fetch());
-
         if (!empty($data['csrf'])) {
 
             if(!csrf_verify($data)) {
@@ -28,6 +27,14 @@ class Web extends Controller
 
             if(empty($data['user']) || empty($data['password'])) {
                 $json['message'] = $this->message->warning("Informe seu usuário e senha para entrar!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $auth = (new Auth());
+
+            if (!$auth->login($data['user'], $data['password'])) {
+                $json['message'] = $auth->message()->render();
                 echo json_encode($json);
                 return;
             }
