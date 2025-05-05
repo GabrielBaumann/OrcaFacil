@@ -1,0 +1,89 @@
+<?php $this->layout("layout"); ?>
+
+<div><?= flash(); ?></div>
+<main class="flex-grow w-full max-w-6xl mx-auto px-4 sm:px-6 py-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h2 class="text-xl font-semibold text-gray-800">Beneficiários e obras</h2>
+        
+        <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
+            <!-- Barra de Pesquisa -->
+            <div class="relative flex-grow sm:w-64">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input type="text" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white placeholder-gray-500 sm:text-sm" placeholder="Pesquisar...">
+            </div>
+            
+            <!-- Filtro -->
+            <select class="block w-full sm:w-auto pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg sm:text-sm bg-white">
+                <option>Todos</option>
+                <option>Ativos</option>
+                <option>Inativos</option>
+            </select>
+            
+            <!-- Botão Novo Cliente -->
+            <a href="../../forms/cadastro.html" class="w-full sm:w-auto">
+                <button class="w-full px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg text-sm font-medium flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Novo Beneficiário
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabela Responsiva -->
+    <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+        <table class="responsive-table min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td data-label="Nome" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Zé do peixe Rodrigues Santos Sousa Silva</td>
+                    <td data-label="CPF" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">123.456.789.10</td>
+                    <td data-label="Telefone" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">(11) 99999-9999</td>
+                    <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                        <div class="flex justify-end space-x-3">
+                            <button class="text-blue-600 hover:text-blue-800">Editar</button>
+                            <button class="text-red-600 hover:text-red-800">Excluir</button>
+                            <button data-modal="materialModal" data-url="/orcafacil/registerMaterial" class="text-green-600 hover:text-green-800 font-medium">Cadastrar Material</button>
+                            <button data-modal="detailModal" data-url="/orcafacil/see" class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginação -->
+    <div class="flex items-center justify-end mt-6">
+        <div class="flex space-x-2">
+            <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- Modal Simplificado para Cadastrar Material -->
+<!-- Modal para Visualizar Detalhes -->
+<div id="modal"></div>
+
+
+    

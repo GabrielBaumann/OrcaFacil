@@ -20,8 +20,25 @@ $route->get("/", "Web:login");
 $route->post("/", "Web:login");
 
 
-// APP
+/**
+ * APP
+ */
+
+ // Works
 $route->get("/start", "App:start");
+$route->get("/see", "App:seeDetails");
+$route->get("/registerMaterial", "App:registerMaterial");
+
+// User
+$route->get("/user", "App:user");
+$route->get("/newuser", "App:newUser");
+$route->post("/newuser", "App:newUser");
+$route->get("/newuser/{idUser}", "App:newUser");
+$route->post("/newuser/{idUser}", "App:newUser");
+
+
+
+$route->get("/exit", "App:logout");
 
 // ERROR ROUTES
 

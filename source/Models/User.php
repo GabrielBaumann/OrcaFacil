@@ -19,7 +19,9 @@ class User extends Model
         string $telefone,
         string $usuario,
         string $email,
-        string $senha
+        string $senha,
+        string $typeAccess,
+        int $ativo
     ) : User {
         $this->id_entidade = $id_entidade;
         $this->nome = $nome;
@@ -27,6 +29,8 @@ class User extends Model
         $this->usuario = $usuario;
         $this->email = $email;
         $this->senha = $senha;
+        $this->type_access = $typeAccess;
+        $this->ativo = $ativo;
         return $this;
     }
 }

@@ -37,6 +37,15 @@ function redirect(string $url): void
  /**
   * ASSETS
   */
+function user() : ?\Source\Models\User
+{
+    return \Source\Models\Auth::user();    
+}
+
+function session(): \Source\Core\Session
+{
+    return new \Source\Core\Session();
+}
 
 function theme(?string $path = null, $theme = CONF_VIEW_THEME) : string
 {
@@ -108,4 +117,43 @@ function passwd(string $password): string
 function passwd_verify(string $password, string $hash): bool
 {
     return password_verify($password, $hash);
+}
+
+/**
+ * Funções de sanitização
+ */
+
+ function cleanInputData(array $data, array $requiredFields): array
+ {
+    $sanitezed = [];
+    $errors = [];
+
+    foreach ($requiredFields as $field) {
+        if (!isset($data[$field])) {
+            $errors[$field] = "Campo '$field' está vazio.";
+            continue;
+        }
+
+        // Remove espaços em branco
+        $value = trim($data[$field]);
+
+        // Se estiver vazio após o trim, é inválido
+        if ($value === "") {
+            $errors[$field] = "Campo '$field' está vazio.";
+            continue;
+        }
+
+        // Sanitize contra scripts e HTML
+
+        $value = strip_tags($value);
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+        $sanitezed[$field] = $value;
+    }
+
+    return [
+        "valid" => empty($errors),
+        "data" => $sanitezed,
+        "errors" => $errors
+    ];
 }
