@@ -77,7 +77,7 @@ function closeModal() {
     }
 }
 
-
+// Escuta o clique e verifica se é data-modal, para disparar o openModal e closeModal
 document.addEventListener("click", (e) => {
     if (e.target.closest("[data-modal]")) {
         
@@ -89,16 +89,26 @@ document.addEventListener("click", (e) => {
     }
 })
 
-// Fechar fora do botão prévio do disparo de evento
+// Esculta o clique e verifica se é closeModal e fecha fora do botão prévio do disparo de evento
 document.addEventListener("click", function(e) {
     if (e.target.id === "closeModal") {
         closeModal();
     }
 });
 
+// Remover elementos com efeito
 function removeElement(element, duration = 1000) {
     if(!element) return;
         element.style.transition = "opacity 0.5s ease";
         element.style.opacity = "0";
     setTimeout(()=> element.remove(), duration);
+}
+
+// Remove mensagem flash
+window.onload = function () {
+    const e = document.querySelector('.alert-container');
+
+    if(e) {
+        removeElement(e, 3000);
+    }
 }

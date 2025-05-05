@@ -14,7 +14,7 @@
         <div>
             <label for="usuario" class="block text-sm font-medium text-gray-700">Usuário</label>
             <div class="flex items-center mt-1 border border-gray-200 rounded-lg bg-gray-50">
-            <input id="usuario" type="text" name="user"
+            <input id="usuario" type="text" name="user" autocomplete="username"
                 class="w-full p-3 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" placeholder="Digite seu usuário" />
             </div>
         </div>
@@ -22,7 +22,7 @@
         <div>
             <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
             <div class="flex items-center mt-1 mb-6 border border-gray-200 rounded-lg bg-gray-50">
-            <input id="senha" type="password" name="password"
+            <input id="senha" type="password" name="password" autocomplete="current-password"
                 class="w-full p-3 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" placeholder="Digite sua senha" />
             </div>
         </div>
