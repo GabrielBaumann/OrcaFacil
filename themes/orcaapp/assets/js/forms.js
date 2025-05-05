@@ -120,3 +120,28 @@ function removeElement(element, duration = 1000) {
         element.style.opacity = "0";
     setTimeout(()=> element.remove(), duration);
 }
+
+/**
+ * pesquisar valores
+ */
+
+document.addEventListener("click", (e) => {
+    if (e.target.id === "search"){
+        const ele = document.getElementById("inputSearch");
+
+        const url = ele.dataset.url;
+        let search = ele.value.trim();
+        
+        if (search === "") {
+            search = "not"
+        }
+
+            fetch(url + encodeURIComponent(search.replace(/\s+/g, "-")))
+            .then(response => response.text())
+            .then(dado => {
+                const updateList = document.getElementById("updateList");
+                updateList.innerHTML = dado
+            })
+            .catch(error => console.log("erro ao carregar", error));
+    }
+});

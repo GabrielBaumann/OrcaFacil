@@ -8,6 +8,7 @@ use Source\Core\Session;
 use Source\Models\Auth;
 use Source\Models\User;
 use Source\Support\Message;
+use Source\Support\Pager;
 
 class App extends Controller
 {
@@ -49,14 +50,43 @@ class App extends Controller
         ]);    
     }
 
-    public function user() : void
+    public function user(?array $data) : void
     {
+        $user = (new User())->find();
+        $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
+        $pager = new Pager(url("/user/p/"));
+        $pager->pager($user->count(), 10, $page);
+
 
         echo $this->view->render("setingUser", [
             "title" => "OrçaFácil Usuários",
             "usuario" => Auth::user()->nome,
             "typeAccess" => Auth::user()->type_access,
-            "usuarios" => (new User())->find()->order("nome")->fetch(true)
+            "usuarios" => $user
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("nome")
+                    ->fetch(true),
+            "paginator" => $pager->render()
+        ]);
+    }
+
+    public function userSearch(array $data) : void
+    {   
+
+        if ($data['search'] === "not") {
+
+            $user = (new User())->find()->limit(10)->order("nome")->fetch(true);
+            echo $this->view->render("/updateAjax/listSetingUser", [
+                "usuarios" => $user
+            ]);
+            return;
+        }
+
+        $user = (new User())->find()->limit(2)->fetch(true);
+
+        echo $this->view->render("/updateAjax/listSetingUser", [
+            "usuarios" => $user
         ]);
     }
 

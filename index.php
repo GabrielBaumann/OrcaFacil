@@ -31,6 +31,9 @@ $route->get("/registerMaterial", "App:registerMaterial");
 
 // User
 $route->get("/user", "App:user");
+$route->get("/user/p/{page}", "App:user");
+$route->get("/user/s/{search}", "App:userSearch");
+
 $route->get("/newuser", "App:newUser");
 $route->post("/newuser", "App:newUser");
 $route->get("/newuser/{idUser}", "App:newUser");

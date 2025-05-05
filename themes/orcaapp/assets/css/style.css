@@ -55,3 +55,39 @@
 button:focus {
     outline: none !important;
 }
+
+/* Paginator */
+.paginator {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+.paginator_item {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6; /* cinza claro */
+    color: #374151; /* cinza escuro */
+    text-decoration: none;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.paginator_item:hover {
+    background-color: #e5e7eb;
+    color: #111827;
+}
+
+.paginator_active,
+.paginator_active:hover {
+    background-color: #d1d5db;
+    color: #111827;
+    font-weight: 600;
+    cursor: default;
+}

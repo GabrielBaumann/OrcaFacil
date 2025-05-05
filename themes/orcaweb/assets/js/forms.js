@@ -124,8 +124,9 @@ function removeElement(element, duration = 1000) {
 // Remove mensagem flash
 window.onload = function () {
     const e = document.querySelector('.alert-container');
-
     if(e) {
-        console.log(e.classList);
+        setTimeout(() => {
+            removeElement(e, 3000);
+        }, 3000);
     }
 }
