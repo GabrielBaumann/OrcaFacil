@@ -12,44 +12,62 @@
             </div>
             
             <!-- Body -->
-            <div class="p-6 space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Material</label>
-                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3"></textarea>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4">
+            <form action="<?= url("/registerMaterial")?>">
+
+                <?= csrf_input(); ?>
+                <input hidden name="idWork" type="text" value="<?= $idWork; ?>"> 
+                <div class="p-6 space-y-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1"><?= $user->name_recipient; ?></label>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Preço Unitário (R$)</label>
-                        <input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Material</label>
+                        <input name="material" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Unidade de Medida</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
-                            <option>Unidade</option>
-                            <option>Metro</option>
-                            <option>Quilograma</option>
-                            <option>Litro</option>
-                        </select>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                        <textarea name="description" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Preço Unitário (R$)</label>
+                            <input id="unitPrice" name="unitPrice" type="text" placeholder="R$ 0,00" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Unidade de Medida</label>
+                            <select name="selectAmount" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
+                                <option value="" selected>Selecione unidade</option>
+                                <?php foreach($units as $unit): ?>
+                                    <option value="<?= $unit->id_unit; ?>"><?= $unit->unit; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade</label>
+                            <input id="amount" name="amount" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3"></input>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Valor Total</label>
+                            <input id="valueTotal" name="valueTotal" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3" disabled></input>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                <button id="closeModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
-                    Cancelar
-                </button>
-                <button class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
-                    Salvar Material
-                </button>
-            </div>
+                
+                <!-- Footer -->
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                    <button id="closeModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
+                        Salvar Material
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

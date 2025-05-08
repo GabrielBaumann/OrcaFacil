@@ -12,7 +12,6 @@ use CoffeeCode\Router\Router;
 $session = new Session();
 $route = new Router(url(), ":");
 
-
 // WEB ROUTES
 
 $route->namespace("Source\App");
@@ -24,20 +23,26 @@ $route->post("/", "Web:login");
  * APP
  */
 
- // Works
-$route->get("/start", "App:start");
-$route->get("/see", "App:seeDetails");
-$route->get("/registerMaterial", "App:registerMaterial");
+// beneficiary works
+$route->get("/recipient", "App:recipientWork");
+$route->get("/see/{idWork}", "App:seeDetails");
+$route->post("/seefilter", "App:filterSee");
+$route->get("/addrecipient", "App:addRecipient");
+$route->post("/addrecipient", "App:addRecipient");
+
+$route->get("/registerMaterial/{idWork}", "App:registerMaterial");
+$route->post("/registerMaterial", "App:registerMaterial");
 
 // User
 $route->get("/user", "App:user");
 $route->get("/user/p/{page}", "App:user");
-$route->get("/user/s/{search}", "App:userSearch");
+$route->post("/filter", "App:filterUser");
 
 $route->get("/newuser", "App:newUser");
 $route->post("/newuser", "App:newUser");
 $route->get("/newuser/{idUser}", "App:newUser");
 $route->post("/newuser/{idUser}", "App:newUser");
+
 
 
 

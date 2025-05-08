@@ -157,3 +157,51 @@ function passwd_verify(string $password, string $hash): bool
         "errors" => $errors
     ];
 }
+
+/**
+ * STRING
+ */
+
+function str_price(string $price) : string
+{
+    return  "R$ " . number_format($price, 2, ",", ".");
+}
+
+/**
+ * DATE
+ */
+
+function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
+{
+    return (new DateTime($date))->format($format);
+}
+
+function date_simple(string $date = "now", string $format = "d/m/Y"): string
+{
+    return (new DateTime($date))->format($format);
+}
+
+/**
+ * NUMBER
+ */
+
+ function format_number(int $number): string {
+    return str_pad($number, 3, '0', STR_PAD_LEFT);
+}
+
+function mask_phone(string $phone): string
+{
+    // Remove tudo que não for número
+    $digits = preg_replace('/\D/', '', $phone);
+
+    if (strlen($digits) === 11) {
+        // Celular: (11) 91234-5678
+        return preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $digits);
+    } elseif (strlen($digits) === 10) {
+        // Fixo: (11) 1234-5678
+        return preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $digits);
+    }
+
+    // Se não for 10 ou 11 dígitos, retorna como está
+    return $phone;
+}

@@ -4,8 +4,6 @@ namespace Source\App;
 
 use Source\Core\Controller;
 use Source\Models\Auth;
-use Source\Models\User;
-
 
 class Web extends Controller
 {
@@ -39,7 +37,7 @@ class Web extends Controller
                 return;
             }
 
-            $json['redirected'] = url("/start");
+            $json['redirected'] = url("/recipient");
             echo json_encode($json);
             return;
 
@@ -52,7 +50,7 @@ class Web extends Controller
 
     public function error() : void
     {
-        // echo "<h1>404</h1>";    
+        echo "<h1>404</h1>";    
     }
 
 }

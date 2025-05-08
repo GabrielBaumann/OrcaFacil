@@ -24,7 +24,7 @@
             </select>
             
             <!-- Botão Novo Cliente -->
-            <a href="../../forms/cadastro.html" class="w-full sm:w-auto">
+            <a href="<?= url("/addrecipient"); ?>" class="w-full sm:w-auto">
                 <button class="w-full px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg text-sm font-medium flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -36,34 +36,10 @@
     </div>
 
     <!-- Tabela Responsiva -->
-    <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
-        <table class="responsive-table min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td data-label="Nome" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Zé do peixe Rodrigues Santos Sousa Silva</td>
-                    <td data-label="CPF" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">123.456.789.10</td>
-                    <td data-label="Telefone" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">(11) 99999-9999</td>
-                    <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                        <div class="flex justify-end space-x-3">
-                            <button class="text-blue-600 hover:text-blue-800">Editar</button>
-                            <button class="text-red-600 hover:text-red-800">Excluir</button>
-                            <button data-modal="materialModal" data-url="/orcafacil/registerMaterial" class="text-green-600 hover:text-green-800 font-medium">Cadastrar Material</button>
-                            <button data-modal="detailModal" data-url="/orcafacil/see" class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+    <?php if($recipients): ?> 
+        <div id="updateList">
+            <?php $this->insert("/updateAjax/listWorksRecipient", ["recipients" => $recipients]) ?>
+        </div>
     <!-- Paginação -->
     <div class="flex items-center justify-end mt-6">
         <div class="flex space-x-2">
@@ -80,6 +56,9 @@
         </div>
     </div>
 </main>
+    <?php else: ?>
+        <div>Começe agora a cadastrar...</div>
+    <?php endif; ?>
 
 <!-- Modal Simplificado para Cadastrar Material -->
 <!-- Modal para Visualizar Detalhes -->

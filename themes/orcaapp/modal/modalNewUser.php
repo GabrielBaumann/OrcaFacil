@@ -72,7 +72,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
-                        Salvar Material
+                        <?= (isset($user->id_usuarios) ? "Editar Usuário" : "Salvar Usuário"); ?>
                     </button>
                 </div>
             </form>
