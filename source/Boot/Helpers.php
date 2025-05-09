@@ -123,10 +123,21 @@ function passwd_verify(string $password, string $hash): bool
  * Funções de sanitização
  */
 
- function cleanInputData(array $data, array $requiredFields): array
+ function cleanInputData(array $data, ?array $removerFilds = null): array
  {
+    $allKeys = array_keys($data);
+    $requiredFields = array_diff($allKeys, $removerFilds);
+
     $sanitezed = [];
     $errors = [];
+    
+    foreach ($removerFilds as $field) {
+        $value = trim($data[$field]);
+        $value = strip_tags($value);
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+        $sanitezed[$field] = $value;
+    }
 
     foreach ($requiredFields as $field) {
         if (!isset($data[$field])) {

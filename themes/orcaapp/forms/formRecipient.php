@@ -1,6 +1,7 @@
 <?php $this->layout("/forms/layout"); ?>
 
 <form class="space-y-6">
+    <?= csrf_input(); ?>
     <div class="space-y-4">
         <!-- Seção de Dados Pessoais -->
         <div class="border-b border-gray-200 dark:border-gray-600 pb-4">
@@ -23,7 +24,13 @@
             <div>
                 <label for="data-nascimento" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data de Nascimento</label>
                 <input type="date" id="data-nascimento" name="data-nascimento"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+            </div>
+
+            <div>
+                <label for="data-inicio-obra" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data Início Obra</label>
+                <input type="date" id="data-inicio-obra" name="data-inicio-obra"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div>

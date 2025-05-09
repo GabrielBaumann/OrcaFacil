@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= theme("/assets/css/message.css", CONF_VIEW_APP)?>">
     <title><?= $this->e($default['title']) ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,8 +27,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         
-       
-        
         /* Melhora a aparência dos inputs no mobile */
         input, select, textarea {
             -webkit-appearance: none;
@@ -45,7 +44,6 @@
         }
         
     </style>
-    <script src="<?= theme("/themes/orcaapp/assets/css/message.css", CONF_VIEW_APP)?>"></script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen font-sans pb-16 sm:pb-0">
     <!-- Primeiro Header com Logo e Botão Voltar -->

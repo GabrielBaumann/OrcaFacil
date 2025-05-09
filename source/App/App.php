@@ -40,6 +40,49 @@ class App extends Controller
 
     public function addRecipient(?array $data) : void
     {
+
+        if(!empty($data['csrf'])) {
+
+            if(!csrf_verify($data)) {
+                $json['message'] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $removerKeys = ["observacoes", "endereco"];
+            $cleanArray = cleanInputData($data, $removerKeys);
+
+            if(!$cleanArray['valid']) {
+                $json["message"] = (new Message())->error("Preencha os campos obrigatórios!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $dataClean = $cleanArray['data'];
+            
+            $newRecipientWork = (new RecipientWork());
+            $newRecipientWork->bootstrap(
+                $this->user->id_usuarios,
+                $dataClean["nome"],
+                $dataClean["cpf"],
+                $dataClean["endereco"],
+                $dataClean["telefone"],
+                $dataClean["email"],
+                $dataClean["genero"],
+                $dataClean["observacoes"],
+                $dataClean["data-nascimento"],
+                $dataClean["data-inicio-obra"],
+                $dataClean["cit"],
+                $dataClean["estado"] 
+            );
+
+            if($newRecipientWork->save()){
+                $json['message'] = $this->message->success("Registro salvo com sucesso!")->render();
+                echo json_encode($json);
+                return;
+            }
+        }
+      
         $defaultForms = [
             "title" => "OrçaFácil - Cadastro Obras",
             "url" => url("/recipient"),
@@ -49,7 +92,8 @@ class App extends Controller
 
         echo $this->view->render("/forms/formRecipient", [
             "default" => $defaultForms
-        ]);    
+        ]);
+        
     }
 
     public function seeDetails(?array $data) : void
@@ -105,7 +149,8 @@ class App extends Controller
     }
 
     public function registerMaterial(?array $data) : void
-    {
+    {   
+
         if (isset($data['idWork'])) {
             $idWork = $data['idWork'];
             $user = (new RecipientWork())->findById($idWork);
@@ -119,10 +164,8 @@ class App extends Controller
                 return;
             }
 
-            $arrayKeys = array_keys($data);
-            $removerKeys = ["description", "valueTotal"];
-            $reqiredKeys = array_diff($arrayKeys, $removerKeys);
-            $cleanArray = cleanInputData($data, $reqiredKeys);
+            $removerKeys = ["description"];
+            $cleanArray = cleanInputData($data, $removerKeys);
 
             if(!$cleanArray['valid']) {
                 $json["message"] = (new Message())->error("Preencha os campos obrigatórios!")->render();
