@@ -43,14 +43,13 @@ class App extends Controller
 
         if(!empty($data['csrf'])) {
 
-            if(!csrf_verify($data)) {
-                $json['message'] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
-                echo json_encode($json);
-                return;
-            }
+            // if(!csrf_verify($data)) {
+            //     $json['message'] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
+            //     echo json_encode($json);
+            //     return;
+            // }
 
-            $removerKeys = ["observacoes", "endereco"];
-            $cleanArray = cleanInputData($data, $removerKeys);
+            $cleanArray = cleanInputData($data);
 
             if(!$cleanArray['valid']) {
                 $json["message"] = (new Message())->error("Preencha os campos obrigatórios!")->render();
@@ -63,17 +62,17 @@ class App extends Controller
             $newRecipientWork = (new RecipientWork());
             $newRecipientWork->bootstrap(
                 $this->user->id_usuarios,
-                $dataClean["nome"],
+                $dataClean["name"],
                 $dataClean["cpf"],
-                $dataClean["endereco"],
-                $dataClean["telefone"],
+                $dataClean["address"],
+                $dataClean["telephone"],
                 $dataClean["email"],
-                $dataClean["genero"],
-                $dataClean["observacoes"],
-                $dataClean["data-nascimento"],
-                $dataClean["data-inicio-obra"],
+                $dataClean["gender"],
+                $dataClean["observation"],
+                $dataClean["date-birth"],
+                $dataClean["date-start-work"],
                 $dataClean["cit"],
-                $dataClean["estado"] 
+                $dataClean["state"] 
             );
 
             if($newRecipientWork->save()){
@@ -280,9 +279,7 @@ class App extends Controller
                 return;
             }
 
-            $arrayKeys = array_keys($data);
-
-            $resultado = cleanInputData($data, $arrayKeys);
+            $resultado = cleanInputData($data);
 
             if(!$resultado['valid']) {
                $json['message'] = (new Message())->error("Preencha todos os campos!")->render();
