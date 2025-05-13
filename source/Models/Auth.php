@@ -15,9 +15,11 @@ class Auth extends Model
     public static function user() : ?User
     {
         $session = new Session();
+        
         if (!$session->has("authUser")){
             return null;
         }
+
         return (new User())->findById($session->authUser);    
     }
 

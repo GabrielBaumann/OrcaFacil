@@ -18,7 +18,7 @@ document.getElementById('cpf').addEventListener('input', function(e) {
 });
 
 // Máscara para telefone
-document.getElementById('telefone').addEventListener('input', function(e) {
+document.getElementById('telephone').addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length > 11) value = value.substring(0, 11);
     
@@ -35,8 +35,8 @@ document.getElementById('telefone').addEventListener('input', function(e) {
 // API para retornar estados e cudades do IBGE
 
 document.addEventListener("click", (e) => {
-    if(e.target.tagName === "SELECT" && e.target.id === "estado") {
-        const vStateSelect = document.getElementById("estado");
+    if(e.target.tagName === "SELECT" && e.target.id === "state") {
+        const vStateSelect = document.getElementById("state");
         const vCitSelect = document.getElementById("cit");
 
         fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')

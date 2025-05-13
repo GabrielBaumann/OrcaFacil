@@ -43,11 +43,11 @@ class App extends Controller
 
         if(!empty($data['csrf'])) {
 
-            // if(!csrf_verify($data)) {
-            //     $json['message'] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
-            //     echo json_encode($json);
-            //     return;
-            // }
+            if(!csrf_verify($data)) {
+                $json['message'] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
+                echo json_encode($json);
+                return;
+            }
 
             $cleanArray = cleanInputData($data);
 
@@ -80,6 +80,10 @@ class App extends Controller
                 echo json_encode($json);
                 return;
             }
+
+            $json['message'] = $newRecipientWork->message;
+            echo json_encode($json);
+            return;
         }
       
         $defaultForms = [

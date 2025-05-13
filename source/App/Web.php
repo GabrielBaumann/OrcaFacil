@@ -3,6 +3,7 @@
 namespace Source\App;
 
 use Source\Core\Controller;
+use Source\Core\Session;
 use Source\Models\Auth;
 
 class Web extends Controller
@@ -40,7 +41,6 @@ class Web extends Controller
             $json['redirected'] = url("/recipient");
             echo json_encode($json);
             return;
-
         }
 
         echo $this->view->render("login", [

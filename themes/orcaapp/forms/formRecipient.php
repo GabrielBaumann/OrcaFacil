@@ -1,6 +1,6 @@
 <?php $this->layout("/forms/layout"); ?>
 
-<form class="space-y-6">
+<form action="<?= url("/addrecipient"); ?>" class="space-y-6">
     <?= csrf_input(); ?>
     <div class="space-y-4">
         <!-- Seção de Dados Pessoais -->
@@ -10,34 +10,34 @@
         
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-                <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome completo *</label>
-                <input type="text" id="nome" name="nome" required
+                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome completo *</label>
+                <input type="text" id="name" name="name" 
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div>
                 <label for="cpf" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CPF *</label>
-                <input type="text" id="cpf" name="cpf" required
+                <input type="text" id="cpf" name="cpf" 
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div>
-                <label for="data-nascimento" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data de Nascimento</label>
-                <input type="date" id="data-nascimento" name="data-nascimento"
+                <label for="date-birth" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data de Nascimento</label>
+                <input type="date" id="date-birth" name="date-birth"
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
 
             <div>
-                <label for="data-inicio-obra" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data Início Obra</label>
-                <input type="date" id="data-inicio-obra" name="data-inicio-obra"
+                <label for="date-start-work" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data Início Obra</label>
+                <input type="date" id="date-start-work" name="date-start-work"
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div>
-                <label for="genero" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gênero</label>
-                <select id="genero" name="genero"
+                <label for="gender" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gênero</label>
+                <select id="gender" name="gender"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
-                    <option value="">Selecione</option>
+                    <option value=>Selecione</option>
                     <option value="masculino">Masculino</option>
                     <option value="feminino">Feminino</option>
                     <option value="outro">Outro</option>
@@ -54,32 +54,32 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">E-mail *</label>
-                <input type="email" id="email" name="email" required
+                <input type="email" id="email" name="email" 
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div>
-                <label for="telefone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefone *</label>
-                <input type="tel" id="telefone" name="telefone" required
+                <label for="telephone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefone *</label>
+                <input type="tel" id="telephone" name="telephone" 
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             
             <div class="sm:col-span-2">
-                <label for="endereco" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Endereço</label>
-                <input type="text" id="endereco" name="endereco"
+                <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Endereço</label>
+                <input type="text" id="address" name="address"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
 
             <div>
-                <label for="estado" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
-                <select id="estado" name="estado"
+                <label for="state" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
+                <select id="state" name="state"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
                     <option value="">Selecione um estado</option>
                 </select>
             </div>
 
             <div>
-                <label for="cidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cidade</label>
+                <label for="cit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cidade</label>
                 <select id="cit" name="cit"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
                     <option value="">Selecione um estado</option>
@@ -94,8 +94,8 @@
         </div>
         
         <div>
-            <label for="observacoes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Observações</label>
-            <textarea id="observacoes" name="observacoes" rows="3"
+            <label for="observation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Observações</label>
+            <textarea id="observation" name="observation" rows="3"
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"></textarea>
         </div>
     </div>

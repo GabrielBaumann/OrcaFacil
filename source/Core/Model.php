@@ -34,7 +34,7 @@ abstract class Model
     /** @var array $entity database table */
     protected static $required;
 
-    // protected string $id = "id";
+    protected $id;
 
     /**
      * Model constructor.
@@ -57,6 +57,10 @@ abstract class Model
      */
     public function __set($name, $value)
     {
+        if ($name === "id") {
+        return;
+        }
+
         if (empty($this->data)) {
             $this->data = new \stdClass();
         }
@@ -120,6 +124,7 @@ abstract class Model
 
     public function findById(int $id, string $columns = "*"): ?Model
     {
+
         $find = $this->find( $this->id . " = :id", "id={$id}", $columns);
         return $find->fetch();
     }
@@ -183,7 +188,7 @@ abstract class Model
 
             $stmt = Connect::getInstance()->prepare("INSERT INTO " . static::$entity . " ({$columns}) VALUES ({$values})");
             $stmt->execute($this->filter($data));
-
+            
             return Connect::getInstance()->lastInsertId();
         } catch (\PDOException $exception) {
             $this->fail = $exception;
@@ -229,7 +234,7 @@ abstract class Model
         // Atualizar
         if (!empty($this->$primaryKey)) {
             $id = $this->$primaryKey;
-            
+
             $this->update($this->safe(), $this->id . " = :id", "id={$id}");
             if ($this->fail()) {
                 $this->message->error("Erro ao atualizar, verifique os dados");
@@ -239,8 +244,9 @@ abstract class Model
 
         // Criar
         if (empty($this->$primaryKey)) {
-            $id = $this->create($this->safe());
             
+            $id = $this->create($this->safe());
+
             if ($this->fail()) {
                 $this->message->error("Erro ao cadastrar, verifique os dados");
                 return false;

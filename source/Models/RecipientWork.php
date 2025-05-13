@@ -43,7 +43,7 @@ class RecipientWork extends Model
         $this->date_birth = $date_birth;
         $this->startdate = $startdate;
         $this->city = $city;
-        $this->estate = $estate;
+        $this->state = $estate;
         $this->active = $active;
         return $this;
     }
