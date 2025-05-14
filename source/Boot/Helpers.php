@@ -47,6 +47,11 @@ function session(): \Source\Core\Session
     return new \Source\Core\Session();
 }
 
+function messageHelpers() : \Source\Support\Message
+{
+    return new \Source\Support\Message();    
+}
+
 function theme(?string $path = null, $theme = CONF_VIEW_THEME) : string
 {
     if (strpos($_SERVER['HTTP_HOST'], "localhost") !== false) {
@@ -120,13 +125,16 @@ function passwd_verify(string $password, string $hash): bool
 }
 
 /**
- * Funções de sanitização
+ * Funções de sanitização e CPF
  */
 
  function cleanInputData(array $data, ?array $removerFilds = null): array
- {
+{
     $allKeys = array_keys($data);
     
+    $sanitezed = [];
+    $errors = [];
+
     if ($removerFilds) {
         $requiredFields = array_diff($allKeys, $removerFilds);
 
@@ -142,12 +150,10 @@ function passwd_verify(string $password, string $hash): bool
         $requiredFields = $allKeys;
     }
     
-    $sanitezed = [];
-    $errors = [];
-    
     foreach ($requiredFields as $field) {
+
         if (!isset($data[$field])) {
-            $errors[$field] = "Campo '$field' está vazio.";
+            $errors[$field] = $field;
             continue;
         }
 
@@ -156,7 +162,7 @@ function passwd_verify(string $password, string $hash): bool
 
         // Se estiver vazio após o trim, é inválido
         if ($value === "") {
-            $errors[$field] = "Campo '$field' está vazio.";
+            $errors[$field] = $field;
             continue;
         }
 
@@ -164,6 +170,10 @@ function passwd_verify(string $password, string $hash): bool
 
         $value = strip_tags($value);
         $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+        if($field === "cpf") {
+            $value = preg_replace('/\D/', "", $data['cpf']);
+        }
 
         $sanitezed[$field] = $value;
     }
@@ -173,6 +183,41 @@ function passwd_verify(string $password, string $hash): bool
         "data" => $sanitezed,
         "errors" => $errors
     ];
+}
+
+function validateCpf($cpf) {
+    // Remove caracteres não numéricos
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+    // Verifica se o CPF tem 11 dígitos
+    if (strlen($cpf) != 11) {
+        return false;
+    }
+
+    // Verifica se todos os dígitos são iguais (ex: 111.111.111-11)
+    if (preg_match('/(\d)\1{10}/', $cpf)) {
+        return false;
+    }
+
+    // Cálculo do primeiro dígito verificador
+    for ($t = 9; $t < 11; $t++) {
+        $soma = 0;
+        for ($i = 0; $i < $t; $i++) {
+            $soma += $cpf[$i] * (($t + 1) - $i);
+        }
+        $resto = ($soma * 10) % 11;
+        $digito = ($resto == 10) ? 0 : $resto;
+
+        if ($cpf[$t] != $digito) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function formatCPF($cpf) {
+    return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpf);
 }
 
 /**

@@ -29,6 +29,8 @@ $route->get("/see/{idWork}", "App:seeDetails");
 $route->post("/seefilter", "App:filterSee");
 $route->get("/addrecipient", "App:addRecipient");
 $route->post("/addrecipient", "App:addRecipient");
+$route->post("/validatecpf", "App:validateCpf");
+
 
 $route->get("/registerMaterial/{idWork}", "App:registerMaterial");
 $route->post("/registerMaterial", "App:registerMaterial");

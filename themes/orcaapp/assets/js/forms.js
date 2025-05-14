@@ -72,6 +72,11 @@ document.addEventListener("submit", (e)=> {
                     removeElement(novoResponse)
                 }, 3000)
             }
+
+            if(data.complete) {
+                document.getElementById("form").reset();
+            }
+
         })
         .catch(error => {
             clearTimeout(timeoutLoading);
@@ -228,3 +233,41 @@ document.addEventListener("click", (e) => {
         .catch(error => console.log("erro ao carregar", error));
     }
 })
+
+// Pesquisa o cpf no banco e retorna erro se já existir
+// document.addEventListener("focusout", (e) => {
+
+//     if(e.target.id === "cpf") {
+//         if(e.target.value !== ""){
+//             const vUrlValidate = e.target.dataset.validadecpf;
+//             const vCpf = e.target.value.replace(/\D/g, '')
+//             const vCpfData = new FormData();
+//             vCpfData.append(e.target.name, vCpf );
+            
+//             fetch(vUrlValidate, {
+//                 method: "POST",
+//                 body: vCpfData
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 if(data.erro) {
+//                     document.getElementById("cpf").value = "";
+//                 }
+//                 fncMensagem(data.message);
+//             })
+//         }
+//     }
+// })
+
+// Função de mensagem
+function fncMensagem (vMessage) {
+    const vResponse = document.createElement("div");
+    vResponse.id = "reponse";
+    vResponse.innerHTML = vMessage;
+
+    document.body.appendChild(vResponse);
+
+    setTimeout(() => {
+        removeElement(vResponse);
+    }, 3000)
+}

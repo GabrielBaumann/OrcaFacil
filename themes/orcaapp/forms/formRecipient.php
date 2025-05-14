@@ -1,6 +1,6 @@
 <?php $this->layout("/forms/layout"); ?>
 
-<form action="<?= url("/addrecipient"); ?>" class="space-y-6">
+<form id="form" action="<?= url("/addrecipient"); ?>" class="space-y-6">
     <?= csrf_input(); ?>
     <div class="space-y-4">
         <!-- Seção de Dados Pessoais -->
@@ -17,7 +17,10 @@
             
             <div>
                 <label for="cpf" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CPF *</label>
-                <input type="text" id="cpf" name="cpf" 
+                <input type="text" 
+                    id="cpf" 
+                    name="cpf"
+                    data-validadecpf="<?= url("/validatecpf")?>"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
             </div>
             

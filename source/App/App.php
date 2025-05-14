@@ -49,7 +49,7 @@ class App extends Controller
                 return;
             }
 
-            $cleanArray = cleanInputData($data);
+            $cleanArray = cleanInputData($data, ["observation","email","telephone"]);
 
             if(!$cleanArray['valid']) {
                 $json["message"] = (new Message())->error("Preencha os campos obrigatórios!")->render();
@@ -58,7 +58,7 @@ class App extends Controller
             }
 
             $dataClean = $cleanArray['data'];
-            
+
             $newRecipientWork = (new RecipientWork());
             $newRecipientWork->bootstrap(
                 $this->user->id_usuarios,
@@ -76,7 +76,8 @@ class App extends Controller
             );
 
             if($newRecipientWork->save()){
-                $json['message'] = $this->message->success("Registro salvo com sucesso!")->render();
+                $json["message"] = $this->message->success("Registro salvo com sucesso!")->render();
+                $json["complete"] = true;
                 echo json_encode($json);
                 return;
             }
@@ -97,6 +98,27 @@ class App extends Controller
             "default" => $defaultForms
         ]);
         
+    }
+
+    public function validateCpf($data) : void
+    {
+
+        if(!validateCpf($data["cpf"])) {
+            $json["message"] = messageHelpers()->warning("O CPF: " . formatCPF($data['cpf']) . " não é válido inválido!")->render();
+            $json["erro"] = true;
+            echo json_encode($json);
+            return;
+        }
+
+        $recipientWork = (new RecipientWork());
+        $recipientWork->find("cpf = :c", "c={$data["cpf"]}");
+
+        if($recipientWork->fetch()) {
+            $json["message"] = messageHelpers()->warning("O CPF: " . formatCPF($data['cpf']) . " já existe na base de dados!")->render();
+            $json["erro"] = true;
+            echo json_encode($json);
+            return;
+        }
     }
 
     public function seeDetails(?array $data) : void
@@ -194,6 +216,7 @@ class App extends Controller
             
             if($materialWork->save()){
                 $json['message'] = $this->message->success("Registro salvo com sucesso!")->render();
+                $json['complete'] = true;
                 echo json_encode($json);
                 return;
             }
