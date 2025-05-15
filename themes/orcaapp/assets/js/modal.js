@@ -48,22 +48,42 @@ function openModal(url, idModal) {
     .then(html => {
         if(load) load.remove();
         
-        const modalView = document.getElementById("modal").innerHTML = html;
-        const modal = document.getElementById(idModal);
-        modal.classList.remove("hidden");
-        document.body.classList.add('overflow-hidden');
-        currentModal = idModal;
+        const vModal = document.getElementById("modal");
+
+        if(vModal.hasChildNodes()) {
+            const vModalNew = document.createElement("div");
+            vModalNew.id = "modalNew";
+            vModalNew.innerHTML = html;
+            document.body.appendChild(vModalNew);
+            currentModal = idModal;
+        
+                window.onclick = function(event) {
+            if (event.target.classList.contains('modalNew')) {
+                closeModal();
+                }
+        };
+        } else {
+            document.getElementById("modal").innerHTML = html;
+            const modal = document.getElementById(idModal);
+            currentModal = idModal;
+
+            window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+                }
+            };
+        }
 
         const closeBtn = document.getElementById("closeModal");
         if (closeBtn) {
             closeBtn.addEventListener("click", closeModal);
         }
 
-        window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            closeModal();
-            }
-        };
+        // window.onclick = function(event) {
+        // if (event.target.classList.contains('modal')) {
+        //     closeModal();
+        //     }
+        // };
     })
     .catch(error => console.error("Erro ao carregar", error));
 }

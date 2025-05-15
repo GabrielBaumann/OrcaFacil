@@ -22,9 +22,6 @@
                     </td>
                     <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                         <div class="flex justify-end space-x-3">
-                            <button class="text-blue-600 hover:text-blue-800">Editar</button>
-                            <button class="text-red-600 hover:text-red-800">Excluir</button>
-                            <button data-modal="materialModal" data-url="/orcafacil/registerMaterial/<?= $recipient->id_work_recipient; ?>" class="text-green-600 hover:text-green-800 font-medium">Cadastrar Material</button>
                             <button data-modal="detailModal" data-url="/orcafacil/see/<?= $recipient->id_work_recipient; ?>" class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
                         </div>
                     </td>

@@ -1,4 +1,4 @@
-<div id="detailModal" class="hidden modal fixed inset-0 flex items-center justify-center z-50 px-4 bg-black bg-opacity-50 overflow-y-auto">
+<div id="detailModal" class="modal fixed inset-0 flex items-center justify-center z-50 px-4 bg-black bg-opacity-50 overflow-y-auto">
     <div class="bg-white w-full max-w-4xl rounded-lg shadow-lg my-8 max-h-[90vh] overflow-y-auto">
         <div class="modal-content">
             <!-- Header -->
@@ -57,11 +57,22 @@
             
             <!-- Footer -->
             <div class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row gap-3 sticky bottom-0 bg-white">
-                <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center">
+                <button class="px-4 py-2 text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 rounded-lg flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     Baixar Relatório em PDF
+                </button>
+                <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center">
+                    Editar
+                </button>
+                <button class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg flex items-center justify-center">
+                    Excluir
+                </button>
+                <button 
+                    data-modal="materialModal" data-url="/orcafacil/registerMaterial/<?= $recipient->id_work_recipient; ?>"
+                    class="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg flex items-center justify-center">
+                    Cadastrar Material
                 </button>
                 <div class="flex flex-col sm:flex-row gap-3 sm:ml-auto">
                     

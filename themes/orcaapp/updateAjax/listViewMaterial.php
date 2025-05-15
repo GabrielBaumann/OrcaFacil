@@ -13,9 +13,9 @@
         </div>
     </div>
 
-    <div class="responsive-table-modal">
+    <div class="responsive-table-modal h-64" style="max-height: 290px; overflow-y: auto;">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-50 sticky top-0">
                 <tr>
                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material</th>
                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantidade</th>
