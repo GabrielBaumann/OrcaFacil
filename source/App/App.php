@@ -215,6 +215,9 @@ class App extends Controller
             $materialWork->total_value = floatval($unit_price) * floatval($amount);
             
             if($materialWork->save()){
+
+                $materialWorks = (new MaterialWork())->find("")->order("material")->fetch(true);
+
                 $json['message'] = $this->message->success("Registro salvo com sucesso!")->render();
                 $json['complete'] = true;
                 echo json_encode($json);

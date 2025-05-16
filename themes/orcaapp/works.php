@@ -62,7 +62,7 @@
 
 <!-- Modal Simplificado para Cadastrar Material -->
 <!-- Modal para Visualizar Detalhes -->
-<div id="modal"></div>
+<!-- <div id="modal"></div> -->
 
 
     

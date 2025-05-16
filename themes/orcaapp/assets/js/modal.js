@@ -47,54 +47,28 @@ function openModal(url, idModal) {
     })
     .then(html => {
         if(load) load.remove();
-        
-        const vModal = document.getElementById("modal");
 
-        if(vModal.hasChildNodes()) {
+        if(document.getElementById("modalSee")){
             const vModalNew = document.createElement("div");
             vModalNew.id = "modalNew";
             vModalNew.innerHTML = html;
             document.body.appendChild(vModalNew);
-            currentModal = idModal;
-        
-                window.onclick = function(event) {
-            if (event.target.classList.contains('modalNew')) {
-                closeModal();
-                }
-        };
+
         } else {
-            document.getElementById("modal").innerHTML = html;
-            const modal = document.getElementById(idModal);
-            currentModal = idModal;
+            vModal = document.createElement("div");
+            vModal.id = "modalSee";
+            vModal.innerHTML = html;
+            document.body.appendChild(vModal)
 
-            window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                closeModal();
-                }
-            };
         }
 
-        const closeBtn = document.getElementById("closeModal");
-        if (closeBtn) {
-            closeBtn.addEventListener("click", closeModal);
-        }
-
-        // window.onclick = function(event) {
-        // if (event.target.classList.contains('modal')) {
-        //     closeModal();
-        //     }
-        // };
     })
     .catch(error => console.error("Erro ao carregar", error));
 }
 
 // função para fechar os modais
-function closeModal() {
-    if(currentModal) {
-        document.getElementById(currentModal).style.display = "none";
-        document.getElementById("modal").innerHTML = "";
-        currentModal = null;
-    }
+function closeModal(idModal) {
+    document.getElementById(idModal).remove();
 }
 
 // Escuta o clique e verifica se é data-modal, para disparar o openModal e closeModal
@@ -111,8 +85,12 @@ document.addEventListener("click", (e) => {
 
 // Esculta o clique e verifica se é closeModal e fecha fora do botão prévio do disparo de evento
 document.addEventListener("click", function(e) {
-    if (e.target.id === "closeModal") {
-        closeModal();
+    if (e.target.closest("button").id === "closeModal") {
+        if (document.getElementById("modalNew")) {
+            closeModal("modalNew");
+        } else {
+            closeModal("modalSee");
+        }
     }
 });
 
@@ -133,3 +111,17 @@ window.onload = function () {
        }, 3000); 
     }
 }
+
+// Fechar o modal detalhe e modal cadastro de material
+window.addEventListener("click", function(e) {
+    
+    const idModal = e.target.id;
+
+    if (idModal === "detailModal") {
+       closeModal("modalSee");
+    }
+
+    if(idModal === "materialModal") {
+        closeModal("modalNew");
+    }
+})

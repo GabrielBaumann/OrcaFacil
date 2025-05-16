@@ -15,7 +15,7 @@
             <form id="form" action="<?= url("/registerMaterial")?>">
 
                 <?= csrf_input(); ?>
-                <input hidden name="idWork" type="text" value="<?= $idWork; ?>"> 
+                <input hidden id="idWork" name="idWork" type="text" value="<?= $idWork; ?>"> 
                 <div class="p-6 space-y-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1"><?= $user->name_recipient; ?></label>
                     <div>
@@ -60,10 +60,10 @@
                 
                 <!-- Footer -->
                 <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                    <button id="closeModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                    <!-- <button id="closeModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
                         Cancelar
-                    </button>
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
+                    </button> -->
+                    <button id="sendData" type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
                         Salvar Material
                     </button>
                 </div>

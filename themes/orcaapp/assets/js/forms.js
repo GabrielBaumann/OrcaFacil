@@ -102,6 +102,23 @@ document.addEventListener("submit", (e)=> {
     }
 });
 
+
+/**
+ * Atualizar lista de material
+ */
+
+document.addEventListener("click", (e) => {
+    if (document.getElementById("sendData")) {
+        
+        if (document.getElementById("idWork").value) {
+            const vHtml = document.getElementById("updateListModal");
+            vHtml.innerHTML = "teste";
+            
+        }
+    }
+})
+
+
 /**
  * evento para fechar messagem
  */
