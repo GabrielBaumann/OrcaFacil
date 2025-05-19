@@ -237,8 +237,10 @@ abstract class Model
 
             $this->update($this->safe(), $this->id . " = :id", "id={$id}");
             if ($this->fail()) {
-                $this->message->error("Erro ao atualizar, verifique os dados");
+                $this->message->error("Erro ao atualizar, verifique os dados")->render();
                 return false;
+            } else {
+                $this->message->success("Dados atualizados com sucesso!")->render();
             }
         }
 
@@ -248,8 +250,10 @@ abstract class Model
             $id = $this->create($this->safe());
 
             if ($this->fail()) {
-                $this->message->error("Erro ao cadastrar, verifique os dados");
+                $this->message->error("Erro ao cadastrar, verifique os dados")->render();
                 return false;
+            } else {
+                $this->message->success("Dados cadastrados com sucesso!")->render();
             }
         }
         
@@ -286,8 +290,9 @@ abstract class Model
         if (empty($this->id)) {
             return false;
         }
+        $id = $this->id;
 
-        $destroy = $this->delete( $this->id . " = :id", "id={$this->id}");
+        $destroy = $this->delete($this->id . " = :id", "id={$this->data->$id}");
         return $destroy;
     }
 

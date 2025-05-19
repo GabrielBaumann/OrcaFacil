@@ -31,7 +31,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Preço Unitário (R$)</label>
-                            <input id="unitPrice" name="unitPrice" type="text" placeholder="R$ 0,00" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
+                            <input id="unitPrice" 
+                                name="unitPrice" 
+                                type="text" 
+                                placeholder="R$ 0,00" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600">
                         </div>
                         
                         <div>
@@ -48,21 +52,29 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade</label>
-                            <input id="amount" name="amount" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3"></input>
+                            <input 
+                                id="amount" 
+                                name="amount" 
+                                type="number" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600"
+                                step="0.01" 
+                                rows="3"></input>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Valor Total</label>
-                            <input id="valueTotal" name="valueTotal" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" rows="3" disabled></input>
+                            <input id="valueTotal" 
+                                name="valueTotal" 
+                                type="text" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-primary-600" 
+                                rows="3" 
+                                disabled></input>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Footer -->
                 <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                    <!-- <button id="closeModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
-                        Cancelar
-                    </button> -->
                     <button id="sendData" type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 rounded-lg">
                         Salvar Material
                     </button>

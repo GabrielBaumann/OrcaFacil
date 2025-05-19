@@ -20,7 +20,7 @@ $route->post("/", "Web:login");
 
 
 /**
- * APP
+ * APP ROUTES
  */
 
 // beneficiary works
@@ -34,6 +34,15 @@ $route->post("/validatecpf", "App:validateCpf");
 
 $route->get("/registerMaterial/{idWork}", "App:registerMaterial");
 $route->post("/registerMaterial", "App:registerMaterial");
+
+// unit
+$route->get("/unit", "App:unit");
+$route->get("/cadUnit", "App:cadUnit");
+$route->get("/cadUnit/{idUnit}", "App:cadUnit");
+$route->post("/cadUnit/{idUnit}", "App:cadUnit");
+$route->get("/deleteUnit/{idUnitDelete}", "App:cadUnit");
+$route->post("/cadUnit", "App:cadUnit");
+$route->post("/filterUnit", "App:filterUnit");
 
 // User
 $route->get("/user", "App:user");

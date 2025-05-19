@@ -247,8 +247,17 @@ function date_simple(string $date = "now", string $format = "d/m/Y"): string
  * NUMBER
  */
 
- function format_number(int $number): string {
+function format_number(int $number): string {
     return str_pad($number, 3, '0', STR_PAD_LEFT);
+}
+
+function clearCurrency($value)
+{
+    // Remove "R$" e espaços, remove pontos, substitui vírgula por ponto
+    $value = str_replace(["R$", " "], "", $value);
+    $value = str_replace(".", "", $value);
+    $value = str_replace(",", ".", $value);
+    return floatval($value);
 }
 
 function mask_phone(string $phone): string

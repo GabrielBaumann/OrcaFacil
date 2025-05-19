@@ -91,10 +91,10 @@
     <header class="h-12 bg-gray-100 border-b border-gray-200 hidden sm:block">
         <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-center">
             <nav class="flex items-stretch h-full">
-                <a href="<?= url("/recipient")?>" class="flex items-center justify-center px-4 sm:px-6 h-full relative border-b-2 border-orange-600 text-black font-medium">
+                <a href="<?= url("/recipient"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full relative border-b-2 border-orange-600 text-black font-medium">
                     <span class="text-sm">Obras</span>
                 </a>
-                <a href="../Unidades/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                <a href="<?= url("/unit"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Unidades de medida</span>
                 </a>
                 <a href="../Categoria/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">

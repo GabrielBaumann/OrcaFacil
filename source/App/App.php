@@ -2,6 +2,7 @@
 
 namespace Source\App;
 
+use EmptyIterator;
 use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Auth;
@@ -94,8 +95,10 @@ class App extends Controller
             "textForms" => "Preencha os dados abaixo para cadastrar um novo eneficiário",
         ];
 
+        $defaultFormsObj = (object) $defaultForms;
+
         echo $this->view->render("/forms/formRecipient", [
-            "default" => $defaultForms
+            "default" => $defaultFormsObj
         ]);
         
     }
@@ -125,7 +128,7 @@ class App extends Controller
     {
         $materialWorks = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}")->order("material")->fetch(true);
         $totalSpent = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}","(SELECT SUM(total_value)) AS total")->fetch();
-        $materialCount = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}")->count();
+        $materialCount = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}","(SELECT SUM(amount)) AS totalAmount")->fetch();
 
         echo $this->view->render("modal/modalViewDetails", [
             "recipient" => (new RecipientWork())->findById($data['idWork']),
@@ -156,20 +159,11 @@ class App extends Controller
 
         $materialWorks = (new MaterialWork())->find($where, http_build_query($params))->order("material")->fetch(true);
 
-        if(!$materialWorks){
-            $json['erro'] = true;
-            $json['message'] = (new Message())->info("Não existe dados para esse filtro: {$nameSearch}!")->render();
-            echo json_encode($json);
-            return;
-        }
-
         $html = $this->view->render("/updateAjax/listViewMaterial", [
             "materialWorks" => $materialWorks
         ]);
-
-        $json['erro'] = false;
-        $json['message'] = $html;
         
+        $json["html"] = $html;      
         echo json_encode($json); 
     }
 
@@ -207,19 +201,30 @@ class App extends Controller
             $materialWork->material = $dataClean["material"];
             $materialWork->description_material = $data["description"];
             $materialWork->unit = $dataClean["selectAmount"];
-            $unit_price = str_replace([".", "."], ["", "."], $dataClean["unitPrice"]);
-            $amount = str_replace([".", "."], ["", "."], $dataClean["amount"]);
+            $unit_price = clearCurrency($dataClean["unitPrice"]);
+            $amount = floatval($dataClean["amount"]);
 
-            $materialWork->unit_price = floatval($unit_price);
-            $materialWork->amount = floatval($amount);
-            $materialWork->total_value = floatval($unit_price) * floatval($amount);
+            $materialWork->unit_price = $unit_price;
+            $materialWork->amount = $amount;
+            $materialWork->total_value = $unit_price * $amount;
             
             if($materialWork->save()){
 
-                $materialWorks = (new MaterialWork())->find("")->order("material")->fetch(true);
+                $materialWorks = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}")->order("material")->fetch(true);
+                $totalSpent = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}","(SELECT SUM(total_value)) AS total")->fetch();
+                $materialCount = (new MaterialWork())->find("id_work = :id", "id={$data['idWork']}", "(SELECT SUM(amount)) as totalAmount")->fetch();
 
-                $json['message'] = $this->message->success("Registro salvo com sucesso!")->render();
-                $json['complete'] = true;
+                $html = $this->view->render("modal/modalViewDetails", [
+                    "recipient" => (new RecipientWork())->findById($data['idWork']),
+                    "materialWorks" => $materialWorks,
+                    "totalSpent" => $totalSpent,
+                    "materialCount" => $materialCount
+                ]);
+
+                $json["message"] = $this->message->success("Registro salvo com sucesso!")->render();
+                $json["complete"] = true;
+                $json["html"] = $html;
+
                 echo json_encode($json);
                 return;
             }
@@ -230,6 +235,133 @@ class App extends Controller
             "user" => $user,
             "units" => (new Unit())->find()->order("unit")->fetch(true)
         ]);    
+    }
+
+    public function unit() : void
+    {
+        // $unit = (new Unit())->findById(48);
+        // $unit->destroy();
+
+        echo $this->view->render("unit", [
+            "title" => "OrçaFácil - Obras",
+            "usuario" => Auth::user()->nome,
+            "title" => "Undiade de medida",
+            "idUser" => $this->user,
+            "typeAccess" => Auth::user()->type_access,
+            "units" => (new Unit())->find()
+                ->order("unit")
+                ->limit(10)
+                ->fetch(true)
+        ]);    
+    }
+
+    public function cadUnit(?array $data) : void
+    {
+        if(isset($data["idUnitDelete"])) {
+            $idUnitDelete = $data["idUnitDelete"];
+            // var_dump($idUnitDelete);
+            $unit = (new Unit())->findById($idUnitDelete);
+            $unit->destroy();
+
+            $json["message"] = messageHelpers()->success("Registro excluído com sucesso!")->render();
+            echo json_encode($json);
+            return;
+        }
+
+        if(isset($data["idUnit"])) {
+            $idUnit = $data["idUnit"];
+            $unit = (new Unit())->find("id_unit = :u", "u={$idUnit}")->fetch();
+        }
+
+        if(!empty($data["csrf"])) {
+            if(!csrf_verify($data)) {
+                $json["message"] = messageHelpers()->warning("Erro ao enivar, use o formulário!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $cleanData = cleanInputData($data, ["observation"]);
+
+            if(!$cleanData["valid"]) {
+                $json["message"] = messageHelpers()->warning("Preencha os campos obrigatórios!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            // Dados sanitizados
+            $dataCheckd = $cleanData["data"];
+
+            if(!isset($idUnit)){
+                // Verificar se a unidade existe e se o nome de abreciação existe
+                $unit = (new Unit())->find("unit = :u OR abbreviation = :a", "u={$dataCheckd["unit"]}&a={$dataCheckd["abbreviation"]}");
+
+                if($unit->fetch()) {
+                    $json["message"] = messageHelpers()->warning("A unidade já existe na base de dados!")->render();
+                    echo json_encode($json);
+                    return;
+                }
+            }
+
+            $complete = true;
+
+            if(isset($idUnit)) {
+                $unit->id_user = $idUnit;
+                $complete = false;
+            }
+
+            $unit->id_user = $this->user->id_usuarios;
+            $unit->unit = $dataCheckd["unit"];
+            $unit->abbreviation = $dataCheckd["abbreviation"];
+            $unit->observation = $dataCheckd["observation"];
+            
+            if($unit->save()) {
+                $json["complete"] = $complete;
+                $json["message"] = $unit->message()->render();
+                echo json_encode($json);
+                return;
+            }
+        }
+        
+        $defaultForms = [
+            "title" => "OrçaFácil - Cadastro Unidade",
+            "url" => url("/unit"),
+            "titleForms" => "Nova Unidade",
+            "textForms" => "Preencha os dados abaixo para cadastrar uma nova unidade",
+        ];
+
+        $defaultFormsObj = (object) $defaultForms;
+
+        echo $this->view->render("/forms/formUnit", [
+            "default" => $defaultFormsObj,
+            "unit" => $unit ?? null
+        ]);    
+    }
+
+    public function filterUnit(array $data) : void
+    {
+        $nameSearch = $data["inputSearch"];
+
+        $condition = [];
+        $params = [];
+
+        if (!empty($nameSearch)) {
+            $condition[] = "unit LIKE :u";
+            $params["u"] = "%{$nameSearch}%";
+        }
+
+        $where = implode(" AND ", $condition);
+
+        $html = $this->view->render("/updateAjax/listUnit", [
+            "units" => (new Unit())
+                ->find($where, http_build_query($params))
+                ->order("unit")
+                ->limit(10)
+                ->fetch(true)
+        ]);    
+
+        $json["html"] = $html;
+        echo json_encode($json);
+
     }
 
     public function user(?array $data) : void
