@@ -1,6 +1,4 @@
-<?php
-
- $this->layout("layout"); ?>
+<?php $this->layout("layout"); ?>
 
 <main class="flex-grow w-full max-w-6xl mx-auto px-4 sm:px-6 py-6">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">

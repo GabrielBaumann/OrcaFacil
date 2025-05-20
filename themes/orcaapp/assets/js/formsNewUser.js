@@ -3,6 +3,7 @@
  */
 document.addEventListener("submit", (e)=> {
     if (e.target.tagName === "FORM") {
+
         e.preventDefault()
 
         const form = e.target;

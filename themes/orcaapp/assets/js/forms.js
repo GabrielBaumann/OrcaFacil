@@ -4,7 +4,6 @@
 document.addEventListener("submit", (e)=> {
     if (e.target.tagName === "FORM") {
         e.preventDefault()
-
         const form = e.target;
         const formData = new FormData(form);
         const actionForm = e.target.action;
@@ -28,7 +27,12 @@ document.addEventListener("submit", (e)=> {
             return response.json();
         })
         .then(data => {
-            
+
+            if(data.updateHtml) {
+                const updateHtml = document.getElementById(data.updateHtml);
+                updateHtml.innerHTML = data.html
+            }
+
             if(data.redirected) {
                 window.location.href = data.redirected
             } else {
@@ -99,8 +103,8 @@ function removeElement(element, duration = 1000) {
 /**
  * pesquisar valores em um input e um um select
  */
-document.addEventListener("click", (e) => {
-    if (e.target.id === "search"){
+document.addEventListener("input", (e) => {
+    if (e.target.id === "inputSearch"){
         const ele = document.getElementById("inputSearch");
         const nameInput = ele.name;
         const url = ele.dataset.url;
@@ -156,6 +160,11 @@ document.addEventListener("change", (e) => {
         })
         .then(response => response.json())
         .then(dado => {
+
+            if(data.redirected) {
+                window.location.href = data.redirected
+            }
+
             const updateList = document.getElementById("updateList");
             updateList.innerHTML = dado.message
         })

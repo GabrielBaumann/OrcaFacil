@@ -238,10 +238,7 @@ class App extends Controller
     }
 
     public function unit() : void
-    {
-        // $unit = (new Unit())->findById(48);
-        // $unit->destroy();
-
+    {   
         echo $this->view->render("unit", [
             "title" => "OrçaFácil - Obras",
             "usuario" => Auth::user()->nome,
@@ -257,16 +254,6 @@ class App extends Controller
 
     public function cadUnit(?array $data) : void
     {
-        if(isset($data["idUnitDelete"])) {
-            $idUnitDelete = $data["idUnitDelete"];
-            // var_dump($idUnitDelete);
-            $unit = (new Unit())->findById($idUnitDelete);
-            $unit->destroy();
-
-            $json["message"] = messageHelpers()->success("Registro excluído com sucesso!")->render();
-            echo json_encode($json);
-            return;
-        }
 
         if(isset($data["idUnit"])) {
             $idUnit = $data["idUnit"];
@@ -277,7 +264,7 @@ class App extends Controller
             if(!csrf_verify($data)) {
                 $json["message"] = messageHelpers()->warning("Erro ao enivar, use o formulário!")->render();
                 echo json_encode($json);
-                return;
+                // return;
             }
 
             $cleanData = cleanInputData($data, ["observation"]);
@@ -364,6 +351,39 @@ class App extends Controller
 
     }
 
+    public function deleteUnit(array $data) : void
+    {
+        if(isset($data["idUnitDelete"])) {
+            $idUnitDelete = $data["idUnitDelete"];
+
+            $unitMaterialwork = (new MaterialWork())->find("unit = :id", "id={$idUnitDelete}")->fetch();
+
+            if($unitMaterialwork) {
+                $json["message"] = messageHelpers()->warning("Essa unidade está associada a um material!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $unit = (new Unit())->findById($idUnitDelete);
+            $unit->destroy();
+
+            $json["updateHtml"] = "updateListModal";
+            $json["message"] = messageHelpers()->success("Registro excluído com sucesso!")->render();
+
+
+            $html = $this->view->render("/updateAjax/listUnit", [
+            "units" => (new Unit())
+                ->find()
+                ->order("unit")
+                ->limit(10)
+                ->fetch(true)
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+        }    
+    }
+
     public function user(?array $data) : void
     {
         $user = (new User())->find();
@@ -418,8 +438,10 @@ class App extends Controller
             "usuarios" => $user
         ]);
 
-        $json['erro'] = false;
-        $json['message'] = $html;
+        $json["redirected"] = url("/user/p/1");
+        $json["erro"] = false;
+        $json["message"] = $html;
+        
         
         echo json_encode($json);
     }
@@ -482,6 +504,16 @@ class App extends Controller
         echo $this->view->render("modal/modalNewUser", [
             "user" => $userId ?? null
         ]);    
+    }
+
+    public function report(?array $data) : void
+    {
+        echo $this->view->render("reports", [
+           "title" => "OrçaFácil - Obras",
+            "usuario" => Auth::user()->nome,
+            "typeAccess" => Auth::user()->type_access,
+            "recipients" => (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}")->fetch(true)
+        ]);
     }
 
     public function logout()

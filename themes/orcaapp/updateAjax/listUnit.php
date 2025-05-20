@@ -24,9 +24,9 @@
                             <a href="<?= url("/cadUnit/{$unit->id_unit}"); ?>">
                                 <button class="text-blue-600 hover:text-blue-800">Editar</button>
                             </a>
-                            <a href="<?= url("/deleteUnit/{$unit->id_unit}"); ?>">
+                            <form action="<?= url("/deleteUnit/{$unit->id_unit}"); ?>">
                                 <button class="text-red-600 hover:text-red-800">Excluir</button>
-                            </a>
+                            </form>
                         </div>
                     </td>
                 </tr>
