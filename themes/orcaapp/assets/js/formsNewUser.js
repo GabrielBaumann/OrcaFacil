@@ -3,11 +3,14 @@
  */
 document.addEventListener("submit", (e)=> {
     if (e.target.tagName === "FORM") {
+
         e.preventDefault()
+
         const form = e.target;
         const formData = new FormData(form);
         const actionForm = e.target.action;
 
+        let load;
         let timeoutLoading;
 
         // Agenda a exibição do "carregamento..." após 300 milesimo
@@ -27,25 +30,20 @@ document.addEventListener("submit", (e)=> {
             return response.json();
         })
         .then(data => {
-
-            if(data.updateHtml) {
-                const updateHtml = document.getElementById(data.updateHtml);
-                updateHtml.innerHTML = data.html
-            }
-
+            
             if(data.redirected) {
                 window.location.href = data.redirected
             } else {
+
                 const load = document.getElementById("response");
+
                 if(load) load.remove();
 
                 fncMensagem(data.message);
-            }
 
-            if(data.complete) {
+                if(data.complete) {
                 document.getElementById("form").reset();
-                const formUpdate = document.getElementById("modalSee");
-                formUpdate.innerHTML = data.html
+            }
 
             }
 
@@ -100,115 +98,30 @@ function removeElement(element, duration = 1000) {
     setTimeout(()=> element.remove(), duration);
 }
 
-/**
- * pesquisar valores em um input e um um select
- */
-document.addEventListener("input", (e) => {
-    if (e.target.id === "inputSearch"){
-        const ele = document.getElementById("inputSearch");
-        const nameInput = ele.name;
-        const url = ele.dataset.url;
-        const search = ele.value.trim();
-        const formaData = new FormData();
-        formaData.append(nameInput, search);
+// Pesquisa o cpf no banco e retorna erro se já existir
+// document.addEventListener("focusout", (e) => {
 
-        nomeSelect = document.getElementById("selectData");
-        formaData.append(nomeSelect.name, nomeSelect.value);
-
-
-        fetch(url, {
-            method: "POST",
-            body: formaData
-        } )
-        .then(response => response.json())
-        .then(dado => {
-
-            if (dado.erro) {
-                const novoResponse = document.createElement("div");
-                novoResponse.id = "response";
-                novoResponse.innerHTML = dado.message;
-        
-                document.body.appendChild(novoResponse);
-        
-                setTimeout(() => {
-                    removeElement(novoResponse);
-                }, 3000);
- 
-            } else {
-
-                updateList.innerHTML = dado.message; // HTML da listagem
-            }
-        })
-        .catch(error => console.log("erro ao carregar", error));
-    }
-});
-
-// Pesquisar valor ao mudar valor de um select
-document.addEventListener("change", (e) => {
-    if (e.target.tagName === "SELECT" && e.target.id === "selectData") {
-        const valor = e.target.value;
-        const name = e.target.name;
-        const url = e.target.dataset.url;
-        const formData = new FormData();
-
-        document.getElementById("inputSearch").value = "";
-        formData.append(name, valor);
-
-        fetch(url, {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(dado => {
-
-            if(data.redirected) {
-                window.location.href = data.redirected
-            }
-
-            const updateList = document.getElementById("updateList");
-            updateList.innerHTML = dado.message
-        })
-        .catch(error => console.log("erro ao carregar", error));
-    }
-});
-
-// Pesquisar valor baseado em um único input
-document.addEventListener("input", (e) => {
-
-    if(e.target.id === "inputSearch") {
-        const vUrl = e.target.dataset.url;
-        const form = new FormData();
-        const vInputSearch = document.getElementById("inputSearch");
-        const vIdRecipient = document.getElementById("idRecipient");
-
-        form.append(vInputSearch.name, vInputSearch.value);
-        form.append(vIdRecipient.name, vIdRecipient.value);
-
-        let timeoutLoading;
-
-        // Agenda a exibição do "carregamento..." após 300 milesimo
-        timeoutLoading = setTimeout(() => {
-            fncLoading();
-        }, 300);
-
-        fetch(vUrl, {
-            method: "POST",
-            body: form
-        })
-        .then(response => {
-            clearTimeout(timeoutLoading);
-            if(!response.ok) throw new Error("Erro no servidor");
-            return response.json();
-        })
-        .then(data => {
-            const load = document.getElementById("response");
-            if(load) load.remove();
-            const updateList = document.getElementById("updateListModal");
-            updateList.innerHTML = data.html; // HTML da listagem
-        })
-        .catch(error => console.log("erro ao carregar", error));
-    }
-})
+//     if(e.target.id === "cpf") {
+//         if(e.target.value !== ""){
+//             const vUrlValidate = e.target.dataset.validadecpf;
+//             const vCpf = e.target.value.replace(/\D/g, '')
+//             const vCpfData = new FormData();
+//             vCpfData.append(e.target.name, vCpf );
+            
+//             fetch(vUrlValidate, {
+//                 method: "POST",
+//                 body: vCpfData
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 if(data.erro) {
+//                     document.getElementById("cpf").value = "";
+//                 }
+//                 fncMensagem(data.message);
+//             })
+//         }
+//     }
+// })
 
 // Função de mensagem
 function fncMensagem (vMessage) {

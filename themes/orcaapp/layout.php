@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -91,21 +92,21 @@
     <header class="h-12 bg-gray-100 border-b border-gray-200 hidden sm:block">
         <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-center">
             <nav class="flex items-stretch h-full">
-                <a href="<?= url("/recipient")?>" class="flex items-center justify-center px-4 sm:px-6 h-full relative border-b-2 border-orange-600 text-black font-medium">
+                <a href="<?= url("/recipient"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full relative border-b-2 border-orange-600 text-black font-medium">
                     <span class="text-sm">Obras</span>
                 </a>
-                <a href="../Unidades/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                <a href="<?= url("/unit"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Unidades de medida</span>
                 </a>
-                <a href="../Categoria/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                <!-- <a href="../Categoria/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Categoria de materiais</span>
-                </a>
-                <a href="../Relatorios/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                </a> -->
+                <a href="<?= url("/report"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Relatórios</span>
                 </a>
                 
                 <?php if($typeAccess == "developer"): ?>
-                    <a href="<?= url("/user")?>" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                    <a href="<?= url("/user"); ?>" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                         <span class="text-sm">Usuários</span>
                     </a>
                 <?php endif; ?>
@@ -124,5 +125,76 @@
     <script src="<?= theme("/assets/js/modal.js", CONF_VIEW_APP); ?>"></script>
     <script src="<?= theme("/assets/js/forms.js", CONF_VIEW_APP); ?>" ></script>
     <script src="<?= theme("/assets/js/calc.js", CONF_VIEW_APP); ?>" ></script>
+
+        <script>
+        // Inicialização dos gráficos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gráfico de Status das Obras
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            const statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Em andamento', 'Finalizadas', 'Aguardando', 'Canceladas'],
+                    datasets: [{
+                        data: [12, 8, 3, 1],
+                        backgroundColor: [
+                            '#3b82f6', // azul
+                            '#10b981', // verde
+                            '#f59e0b', // amarelo
+                            '#ef4444'  // vermelho
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de Gastos por Categoria
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Hidráulica', 'Elétrica', 'Alvenaria', 'Pintura', 'Madeira', 'Outros'],
+                    datasets: [{
+                        label: 'Valor Gasto (R$)',
+                        data: [45000, 38000, 72000, 28500, 32000, 71950],
+                        backgroundColor: '#2563eb',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'R$ ' + context.raw.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
