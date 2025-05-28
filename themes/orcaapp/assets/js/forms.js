@@ -124,19 +124,16 @@ document.addEventListener("input", (e) => {
         .then(dado => {
 
             if (dado.erro) {
-                const novoResponse = document.createElement("div");
-                novoResponse.id = "response";
-                novoResponse.innerHTML = dado.message;
-        
-                document.body.appendChild(novoResponse);
-        
-                setTimeout(() => {
-                    removeElement(novoResponse);
-                }, 3000);
+            fncMensagem(dado.message);
  
             } else {
 
-                updateList.innerHTML = dado.message; // HTML da listagem
+                if(dado.redirected) {
+                    window.location.href = dado.redirected
+                }
+
+                const updateList = document.getElementById("updateList");
+                updateList.innerHTML = dado.html; // HTML da listagem
             }
         })
         .catch(error => console.log("erro ao carregar", error));
@@ -161,7 +158,7 @@ document.addEventListener("change", (e) => {
         .then(response => response.json())
         .then(dado => {
 
-            if(data.redirected) {
+            if(dado.redirected) {
                 window.location.href = data.redirected
             }
 

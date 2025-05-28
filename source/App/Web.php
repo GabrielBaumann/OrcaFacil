@@ -2,6 +2,7 @@
 
 namespace Source\App;
 
+use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Auth;
@@ -15,7 +16,8 @@ class Web extends Controller
 
     public function login(?array $data) : void
     {
-
+        var_dump($data);
+        
         if (!empty($data['csrf'])) {
 
             if(!csrf_verify($data)) {
@@ -29,6 +31,7 @@ class Web extends Controller
                 echo json_encode($json);
                 return;
             }
+            
 
             $auth = (new Auth());
 

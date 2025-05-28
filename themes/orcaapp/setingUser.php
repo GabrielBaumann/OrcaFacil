@@ -42,7 +42,6 @@
         <!-- Tabela Responsiva -->
         <?php $this->insert("/updateAjax/listSetingUser", ["usuarios" => $usuarios]) ?>
     </div>
-    <!-- Paginação -->
-    <?= $paginator; ?>
+
 </main>
 <div id="modal"></div>

@@ -126,7 +126,7 @@
     <script src="<?= theme("/assets/js/forms.js", CONF_VIEW_APP); ?>" ></script>
     <script src="<?= theme("/assets/js/calc.js", CONF_VIEW_APP); ?>" ></script>
 
-        <script>
+        <!-- <script>
         // Inicialização dos gráficos
         document.addEventListener('DOMContentLoaded', function() {
             // Gráfico de Status das Obras
@@ -195,6 +195,6 @@
                 }
             });
         });
-    </script>
+    </script> -->
 </body>
 </html>
