@@ -84,8 +84,10 @@ document.addEventListener("click", (e) => {
 })
 
 // Esculta o clique e verifica se é closeModal e fecha fora do botão prévio do disparo de evento
-document.addEventListener("click", function(e) {
-    if (e.target.closest("button").id === "closeModal") {
+document.addEventListener("click", function(e) 
+{   
+    const vButton = e.target.closest("button");
+    if (vButton && vButton.id === "closeModal") {
         if (document.getElementById("modalNew")) {
             closeModal("modalNew");
         } else {
@@ -123,5 +125,36 @@ window.addEventListener("click", function(e) {
 
     if(idModal === "materialModal") {
         closeModal("modalNew");
+    }
+})
+
+// Paginador ajax sem mudar o URL
+document.addEventListener("click", (e) => {
+    if((e.target.classList[0] === "paginator_item")) {
+        e.preventDefault();
+        const vUrlPaginator = e.target.href;
+
+        fetch(vUrlPaginator)
+        .then(response => response.json())
+        .then(data => {
+            const vList = document.getElementById("updateList");
+            vList.innerHTML = data.html;
+        })
+    }
+})
+
+// Input Search
+document.addEventListener("input", (e) => {
+    vInputSearc = e.target
+    if(vInputSearc.id === "inputSearch" || vInputSearc.id === "selectData") {
+        const vStatus = document.getElementById("selectData").value;
+        const vSearch = document.getElementById("inputSearch").value;
+
+        fetch(vInputSearc.dataset.url + "/" + (vSearch || "*") + "/" + vStatus)
+        .then(response => response.json())
+        .then(data => {
+            const vList = document.getElementById("updateList");
+            vList.innerHTML = data.html;
+        })
     }
 })

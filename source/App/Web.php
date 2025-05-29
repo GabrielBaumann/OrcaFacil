@@ -16,7 +16,6 @@ class Web extends Controller
 
     public function login(?array $data) : void
     {
-        var_dump($data);
         
         if (!empty($data['csrf'])) {
 

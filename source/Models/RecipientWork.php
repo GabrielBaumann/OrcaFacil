@@ -21,15 +21,15 @@ class RecipientWork extends Model
         string $name_recipient,
         string $cpf,
         string $address,
-        string $contact = "",
-        string $email = "",
         string $gender,
-        string $observation = "",
         string $date_birth,
         string $startdate,
         string $city,
         string $estate,
         int $active = 1,
+        ?string $contact = null,
+        ?string $email = null,
+        ?string $observation = null
         
     ) : RecipientWork {
         $this->id_user = $idUser;
