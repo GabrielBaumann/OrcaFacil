@@ -123,7 +123,7 @@
     <?= $this->insert("mobileBottomNavigation"); ?>
 
     <script src="<?= theme("/assets/js/modal.js", CONF_VIEW_APP); ?>"></script>
-    <!-- <script src="<?= theme("/assets/js/forms.js", CONF_VIEW_APP); ?>" ></script> -->
+    <script src="<?= theme("/assets/js/forms.js", CONF_VIEW_APP); ?>" ></script>
     <script src="<?= theme("/assets/js/calc.js", CONF_VIEW_APP); ?>" ></script>
 
         <!-- <script>

@@ -73,13 +73,11 @@ function closeModal(idModal) {
 
 // Escuta o clique e verifica se é data-modal, para disparar o openModal e closeModal
 document.addEventListener("click", (e) => {
-    if (e.target.closest("[data-modal]")) {
-        
-        const idModal = e.target.dataset.modal;
-        const dataUrl = e.target.dataset.url;
-        
+    if (e.target.closest("[data-modal]")) {       
+        const vModal = e.target.closest("[data-modal");
+        const idModal = vModal.dataset.modal;
+        const dataUrl = vModal.dataset.url;
         openModal(dataUrl, idModal)
-
     }
 })
 
@@ -146,15 +144,24 @@ document.addEventListener("click", (e) => {
 // Input Search
 document.addEventListener("input", (e) => {
     vInputSearc = e.target
-    if(vInputSearc.id === "inputSearch" || vInputSearc.id === "selectData") {
-        const vStatus = document.getElementById("selectData").value;
-        const vSearch = document.getElementById("inputSearch").value;
+    if(vInputSearc.id === "input-search" || vInputSearc.id === "select-data") {
+        const vStatus = document.getElementById("select-data");
+        const vSearch = document.getElementById("input-search");
 
-        fetch(vInputSearc.dataset.url + "/" + (vSearch || "*") + "/" + vStatus)
+        const vDataForm = new FormData();
+
+        vDataForm.append(vStatus.name, vStatus.value)
+        vDataForm.append(vSearch.name, vSearch.value)
+
+        fetch(vInputSearc.dataset.url, {
+            method: "post",
+            body: vDataForm
+        })
         .then(response => response.json())
         .then(data => {
+            console.log(data.html);
             const vList = document.getElementById("updateList");
-            vList.innerHTML = data.html;
+            vList.innerHTML = data.html; 
         })
     }
 })

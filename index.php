@@ -46,7 +46,7 @@ $route->post("/filterUnit", "App:filterUnit");
 // User
 $route->get("/user", "App:user");
 $route->get("/user/p/{page}", "App:filterUser");
-$route->get("/filter/{terms}/{status}", "App:filterUser");
+$route->post("/filter", "App:filterUser");
 $route->get("/newuser", "App:newUser");
 $route->post("/newuser", "App:newUser");
 $route->get("/newuser/{idUser}", "App:newUser");

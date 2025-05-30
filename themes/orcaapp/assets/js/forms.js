@@ -9,7 +9,7 @@ document.addEventListener("submit", (e)=> {
         const actionForm = e.target.action;
 
         let timeoutLoading;
-
+        console.log("formulario enviado")
         // Agenda a exibição do "carregamento..." após 300 milesimo
         timeoutLoading = setTimeout(() => {
             fncLoading();

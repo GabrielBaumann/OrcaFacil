@@ -407,8 +407,9 @@ class App extends Controller
 
     public function filterUser(array $data) : void
     {
-
+        
         if(isset($data["page"]) && !empty($data["page"])){
+
             $user = (new User())->find();
             $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
             $pager = new Pager(url("/user/p/"));
@@ -428,59 +429,45 @@ class App extends Controller
             return;
         }
 
-        
-        if(isset($data["terms"]) && !empty($data["terms"])) {
+        $nameSearch = ($data["search"] === "*" ? null : filter_var($data["search"], FILTER_SANITIZE_SPECIAL_CHARS));
+        $status = filter_var($data["status"], FILTER_SANITIZE_SPECIAL_CHARS) === "2" ? null : filter_var($data['status'], FILTER_SANITIZE_SPECIAL_CHARS);   
 
-            if (!empty($data["terms"]) || !empty($data["status"])) {
-                // $nameSearch = filter_var($data["terms"], FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
-                $nameSearch = ($data["terms"] === "*" ? null : filter_var($data["terms"], FILTER_SANITIZE_SPECIAL_CHARS));
-                $status = filter_var($data["status"], FILTER_SANITIZE_SPECIAL_CHARS) === "2" ? null : filter_var($data['status'], FILTER_SANITIZE_SPECIAL_CHARS);
-            }
 
-            $conditions = [];
-            $params = [];
+        $conditions = [];
+        $params = [];
 
-            if (!empty($nameSearch)) {
-                $conditions[] = "nome LIKE :n";
-                $params['n'] = "%{$nameSearch}%";
-            }
-
-            if (!is_null($status)) {
-                $conditions[] = "ativo = :a";
-                $params['a'] = $status;
-            }
-
-            $where = implode(" AND ", $conditions);
-
-            $user = (new User())->find($where, http_build_query($params))->order("nome")->limit(10)->fetch(true);
-
-            if(!$user){
-                $json['erro'] = true;
-                $json['message'] = (new Message())->info("Não existe dados para esse filtro: {$nameSearch}!")->render();
-                echo json_encode($json);
-                return;
-            }
-
-            if(empty($data["terms"])) {
-                $user = (new User())->find();
-                $pager = new Pager(url("/user/p/1"));
-                $pager->pager($user->count(), 10, 1);
-            }
-
-                $html = $this->view->render("/updateAjax/listSetingUser", [
-                "usuarios" => $user
-                // "paginator" =>  $pager->render() ?? null
-                ]);
-
-                $json["html"] = $html;            
-                echo json_encode($json);
-                return;
+        if (!empty($nameSearch)) {
+            $conditions[] = "nome LIKE :n";
+            $params['n'] = "%{$nameSearch}%";
         }
+
+        if (!is_null($status)) {
+            $conditions[] = "ativo = :a";
+            $params['a'] = $status;
+        }
+
+        $where = implode(" AND ", $conditions);
+
+        $user = (new User())->find($where, http_build_query($params));
+        $pager = new Pager(url("/user/p/"));
+        $pager->pager($user->count(), 10, 1);
+
+        $html = $this->view->render("/updateAjax/listSetingUser", [
+        "usuarios" => $user
+            ->limit($pager->limit())
+            ->offset($pager->offset())
+            ->order("nome")
+            ->fetch(true),
+        "paginator" =>  $pager->render()
+        ]);
+
+        $json["html"] = $html;            
+        echo json_encode($json);
+        return;
     }
 
     public function newUser(?array $data) : void
     {
-
         
         if(isset($data['idUser'])) {
             $id = filter_var($data['idUser'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);

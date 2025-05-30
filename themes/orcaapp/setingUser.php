@@ -9,7 +9,13 @@
             <!-- Barra de Pesquisa -->
             <div class="flex items-center flex-grow sm:w-auto">
                 <div class="relative flex-grow">
-                    <input id="inputSearch" data-url="<?= url("/filter") ?>" name="s" type="text" class="block w-full pl-5 pr-3 py-2 border border-gray-300 rounded-l-lg bg-white placeholder-gray-500 sm:text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400" placeholder="Pesquisar...">
+                    <input 
+                        id="input-search" 
+                        data-url="<?= url("/filter") ?>" 
+                        name="search" 
+                        type="text" 
+                        class="block w-full pl-5 pr-3 py-2 border border-gray-300 rounded-l-lg bg-white placeholder-gray-500 sm:text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400" 
+                        placeholder="Pesquisar...">
                 </div>
             
                 <!-- Botão pesquisar -->
@@ -21,7 +27,7 @@
                 </button>
             </div>
             <!-- Filtro -->
-            <select id="selectData" data-url="<?= url("/filter") ?>" name="status" class="block w-full sm:w-auto pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg sm:text-sm bg-white">
+            <select id="select-data" data-url="<?= url("/filter") ?>" name="status" class="block w-full sm:w-auto pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg sm:text-sm bg-white">
                 <option value="2">Todos</option>
                 <option value="1">Ativos</option>
                 <option value="0">Cancelado</option>
