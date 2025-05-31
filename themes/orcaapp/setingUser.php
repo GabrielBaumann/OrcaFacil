@@ -50,4 +50,8 @@
     </div>
 
 </main>
-<div id="modal"></div>
+<?php $this->start("scripts"); ?>
+    <script src="<?= theme("/assets/js/user/forms.js", CONF_VIEW_APP); ?>"></script>
+    <script src="<?= theme("/assets/js/user/modal.js", CONF_VIEW_APP); ?>"></script>
+<?php $this->stop("scripts"); ?>
+<!-- <div id="modal"></div> -->

@@ -237,3 +237,74 @@
         </div>
     </div>
 </main>
+
+<script>
+// Inicialização dos gráficos
+document.addEventListener('DOMContentLoaded', function() {
+    // Gráfico de Status das Obras
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+    const statusChart = new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Em andamento', 'Finalizadas', 'Aguardando', 'Canceladas'],
+            datasets: [{
+                data: [12, 8, 3, 1],
+                backgroundColor: [
+                    '#3b82f6', // azul
+                    '#10b981', // verde
+                    '#f59e0b', // amarelo
+                    '#ef4444'  // vermelho
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+
+    // Gráfico de Gastos por Categoria
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const categoryChart = new Chart(categoryCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Hidráulica', 'Elétrica', 'Alvenaria', 'Pintura', 'Madeira', 'Outros'],
+            datasets: [{
+                label: 'Valor Gasto (R$)',
+                data: [45000, 38000, 72000, 28500, 32000, 71950],
+                backgroundColor: '#2563eb',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'R$ ' + value.toLocaleString('pt-BR');
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'R$ ' + context.raw.toLocaleString('pt-BR');
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>

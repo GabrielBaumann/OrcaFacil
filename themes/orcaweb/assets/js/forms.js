@@ -8,7 +8,7 @@ document.addEventListener("submit", (e)=> {
         const form = e.target;
         const formData = new FormData(form);
         const actionForm = e.target.action;
-        alert(actionForm);
+
         let load;
         let timeoutLoading;
 

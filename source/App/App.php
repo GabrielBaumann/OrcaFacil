@@ -478,6 +478,7 @@ class App extends Controller
 
             if(!csrf_verify($data)) {
                 $json['message'] = $this->message->error("Erro ao enivar, use o formulário!", "Erro de Envio")->render();
+                $json["status"] = false;
                 echo json_encode($json);
                 return;
             }
@@ -486,6 +487,7 @@ class App extends Controller
 
             if(!$resultado['valid']) {
                $json['message'] = (new Message())->error("Preencha todos os campos!")->render();
+               $json["status"] = false;
                echo json_encode($json);
                return;
             }
@@ -509,15 +511,32 @@ class App extends Controller
             }
 
             if($user->save()) {
-                $json['message'] = (new Message)->success("Cadastro feito com sucesso")->render();
-                $json['redirected'] = url("/user");
+                
+                $json["resetForm"] = true;
+
+                if(isset($userId)) {
+                    $json["resetForm"] = false;
+                }
+                $json["message"] = $user->message()->render();
+
+                $user = (new User())->find();
+                $pager = new Pager(url("/user/p/1"));
+                $pager->pager($user->count(), 10, 1);
+
+                $html = $this->view->render("updateAjax/listSetingUser", [
+                "usuarios" => $user
+                        ->limit($pager->limit())
+                        ->offset($pager->offset())
+                        ->order("nome")
+                        ->fetch(true),
+                "paginator" => $pager->render()
+                ]);
+            
+                $json["html"] = $html;
+                $json["status"] = true;
                 echo json_encode($json);
                 return;
             };
-
-            $json['message'] = (new Message)->error("Erro vamos investigar", "Desculpe")->render();
-            echo json_encode($json);
-            return;
         }
 
         echo $this->view->render("modal/modalNewUser", [

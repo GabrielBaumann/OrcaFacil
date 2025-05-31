@@ -12,7 +12,7 @@
                 </button>
             </div>
                 <!-- Body -->
-            <form action="<?= url("/newuser") . (isset($user->id_usuarios) ? "/" . $user->id_usuarios : "") ?>" method="post">
+            <form id="form-user" action="<?= url("/newuser") . (isset($user->id_usuarios) ? "/" . $user->id_usuarios : "") ?>" method="post">
                 <?= csrf_input(); ?>
                 <div class="p-6 space-y-4">
                     <div>
