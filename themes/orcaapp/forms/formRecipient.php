@@ -115,5 +115,5 @@
 </form>
 
 <?php $this->start("scripts") ?>
-    <script src="<?= theme("/assets/js/mask.js", CONF_VIEW_APP)?>"></script>
-<?php $this->end() ?>
+    <script src="<?= theme("/assets/js/works/mask.js", CONF_VIEW_APP)?>"></script>
+<?php $this->stop() ?>

@@ -13,15 +13,24 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <input type="text" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white placeholder-gray-500 sm:text-sm" placeholder="Pesquisar...">
+                <input 
+                    data-url="<?= url("/recipient"); ?>"
+                    id="input-search"
+                    name="input-search"
+                    type="text" 
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white placeholder-gray-500 sm:text-sm" placeholder="Pesquisar...">
             </div>
             
             <!-- Filtro -->
-            <select class="block w-full sm:w-auto pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg sm:text-sm bg-white">
+            <!-- <select 
+                data-url="<?= url("/recipient"); ?>"
+                id="select-data"
+                name="select-search"
+                class="block w-full sm:w-auto pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg sm:text-sm bg-white">
                 <option>Todos</option>
                 <option>Ativos</option>
                 <option>Inativos</option>
-            </select>
+            </select> -->
             
             <!-- Botão Novo Cliente -->
             <a href="<?= url("/addrecipient"); ?>" class="w-full sm:w-auto">
@@ -36,30 +45,17 @@
     </div>
 
     <!-- Tabela Responsiva -->
-    <?php if($recipients): ?> 
-        <div id="updateList">
-            <?php $this->insert("/updateAjax/listWorksRecipient", ["recipients" => $recipients]) ?>
-        </div>
-    <!-- Paginação -->
-    <div class="flex items-center justify-end mt-6">
-        <div class="flex space-x-2">
-            <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
+    <div id="updateList">
+        <?php $this->insert("/updateAjax/listWorksRecipient", ["recipients" => $recipients]) ?>
     </div>
-</main>
-    <?php else: ?>
-        <div>Começe agora a cadastrar...</div>
-    <?php endif; ?>
 
+</main>
+
+<?= $this->start("scripts"); ?>
+    <script src="<?= theme("/assets/js/works/modal.js", CONF_VIEW_APP) ?>"></script>
+    <script src="<?= theme("/assets/js/works/calc.js", CONF_VIEW_APP)?>"></script>
+    <script src="<?= theme("/assets/js/works/forms.js", CONF_VIEW_APP)?>"></script>
+<?= $this->stop("scripts"); ?>
 <!-- Modal Simplificado para Cadastrar Material -->
 <!-- Modal para Visualizar Detalhes -->
 <!-- <div id="modal"></div> -->

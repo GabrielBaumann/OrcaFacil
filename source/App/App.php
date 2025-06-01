@@ -28,14 +28,87 @@ class App extends Controller
 
     }
 
-    public function recipientWork(): void
+    public function recipientWork(?array $data): void
     {
+        // Carregar lista baseado na pesquisa do inputSearch
+        
+        if (isset($data["input-search"]) && !empty($data["input-search"])) {
+            $inputSearc = isset($data["input-search"]) && $data["input-search"] ? filter_var($data["input-search"], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+
+
+            if($inputSearc === "*") {
+                $inputSearc = null;
+            }
+            
+            $conditions = [];
+            $params = [];
+
+            if (!empty($inputSearc)) {
+                $conditions[] = "name_recipient LIKE :n";
+                $params["n"] = "%{$inputSearc}%";
+            }
+
+            $conditions[] = "id_user = :i";
+            $params["i"] = $this->user->id_usuarios;
+
+            $where = implode(" AND ", $conditions);
+
+            $recipentWprk = (new RecipientWork())->find($where, http_build_query($params));
+            $pager = new Pager(url("/recipient/p/"));
+            $pager->pager($recipentWprk->count(), 10, 1);
+
+            $html = $this->view->render("/updateAjax/listWorksRecipient", [
+                "recipients" => $recipentWprk
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("name_recipient")
+                    ->fetch(true),
+                "paginator" => $pager->render()
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
+        // Conteúdo das páginas
+        if (isset($data["page"]) && $data["page"]) {
+
+            $recipentWprk = (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}");
+            $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
+            $pager = new Pager(url("/recipient/p/"));
+            $pager->pager($recipentWprk->count(), 10, $page);
+
+            $html = $this->view->render("/updateAjax/listWorksRecipient", [
+                "recipients" => $recipentWprk
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("name_recipient")
+                    ->fetch(true),
+                "paginator" => $pager->render()
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
+        $recipentWprk = (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}");
+        $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
+        $pager = new Pager(url("/recipient/p/"));
+        $pager->pager($recipentWprk->count(), 10, $page);
+       
 
         echo $this->view->render("works", [
             "title" => "OrçaFácil - Obras",
             "usuario" => Auth::user()->nome,
             "typeAccess" => Auth::user()->type_access,
-            "recipients" => (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}")->fetch(true)
+            "recipients" => $recipentWprk
+                ->limit($pager->limit())
+                ->offset($pager->offset())
+                ->order("name_recipient")
+                ->fetch(true),
+            "paginator" => $pager->render()
         ]);
     }
 
@@ -66,14 +139,14 @@ class App extends Controller
                 $dataClean["name"],
                 $dataClean["cpf"],
                 $dataClean["address"],
-                $dataClean["telephone"],
-                $dataClean["email"],
                 $dataClean["gender"],
-                $dataClean["observation"],
                 $dataClean["date-birth"],
                 $dataClean["date-start-work"],
                 $dataClean["cit"],
-                $dataClean["state"] 
+                $dataClean["state"],
+                $dataClean["telephone"],
+                $dataClean["email"],
+                $dataClean["observation"]
             );
 
             if($newRecipientWork->save()){
@@ -140,9 +213,10 @@ class App extends Controller
 
     public function filterSee(array $data) : void
     {   
-
         $nameSearch = $data['inputSearch'] ?? null;
         $idRecipient = $data['idRecipient'];
+
+        $nameSearch = ($nameSearch === "*") ? null : $nameSearch;
 
         $conditions = [];
         $params = [];

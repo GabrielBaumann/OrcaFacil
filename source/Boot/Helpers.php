@@ -247,7 +247,7 @@ function date_simple(string $date = "now", string $format = "d/m/Y"): string
  * NUMBER
  */
 
-function format_number(int $number): string {
+function format_number(float|string $number): string {
     return str_pad($number, 3, '0', STR_PAD_LEFT);
 }
 

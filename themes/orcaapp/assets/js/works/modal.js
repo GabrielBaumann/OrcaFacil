@@ -1,6 +1,3 @@
-// Abre modal baseado em modelos do plates
-let currentModal = null;
-
 // Função que recebe o endereço e devolve via ajax o modelo
 function openModal(url, idModal) {
     
@@ -126,32 +123,20 @@ window.addEventListener("click", function(e) {
     }
 })
 
-// Paginador ajax sem mudar o URL
-document.addEventListener("click", (e) => {
-    if((e.target.classList[0] === "paginator_item")) {
-        e.preventDefault();
-        const vUrlPaginator = e.target.href;
-
-        fetch(vUrlPaginator)
-        .then(response => response.json())
-        .then(data => {
-            const vList = document.getElementById("updateList");
-            vList.innerHTML = data.html;
-        })
-    }
-})
-
-// Input Search
+// Input Search lista de obras
 document.addEventListener("input", (e) => {
     vInputSearc = e.target
     if(vInputSearc.id === "input-search" || vInputSearc.id === "select-data") {
         const vStatus = document.getElementById("select-data");
-        const vSearch = document.getElementById("input-search");
+        let vSearch = document.getElementById("input-search");
+
+        vValue = vSearch.value
+        vName = vSearch.name
 
         const vDataForm = new FormData();
+        vValue = vValue === "" ? "*" : vValue
 
-        vDataForm.append(vStatus.name, vStatus.value)
-        vDataForm.append(vSearch.name, vSearch.value)
+        vDataForm.append(vName, vValue)
 
         fetch(vInputSearc.dataset.url, {
             method: "post",
@@ -159,8 +144,35 @@ document.addEventListener("input", (e) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.html);
             const vList = document.getElementById("updateList");
+            vList.innerHTML = data.html; 
+        })
+    }
+})
+
+// Input Search lista de materiais
+document.addEventListener("input", (e) => {
+    vInputSearc = e.target
+    if(vInputSearc.id === "inputSearch") {
+        const vIdRecipient = document.getElementById("idRecipient");
+        let vSearch = document.getElementById("inputSearch");
+
+        vValue = vSearch.value
+        vName = vSearch.name
+
+        const vDataForm = new FormData();
+        vValue = vValue === "" ? "*" : vValue
+
+        vDataForm.append(vName, vValue)
+        vDataForm.append(vIdRecipient.name, vIdRecipient.value);
+
+        fetch(vInputSearc.dataset.url, {
+            method: "post",
+            body: vDataForm
+        })
+        .then(response => response.json())
+        .then(data => {
+            const vList = document.getElementById("updateListModal");
             vList.innerHTML = data.html; 
         })
     }

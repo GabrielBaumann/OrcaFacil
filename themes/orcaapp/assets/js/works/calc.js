@@ -1,3 +1,4 @@
+// verifica os campos e converte para moeda corrente
 document.addEventListener("change", (e) => {
     if (e.target.id === "unitPrice" || e.target.id === "amount") {
     

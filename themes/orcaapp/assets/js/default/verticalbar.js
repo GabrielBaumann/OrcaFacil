@@ -11,3 +11,18 @@ vSepanAll.map((e) => {
         }
     }
 })
+
+// Paginador ajax sem mudar o URL
+document.addEventListener("click", (e) => {
+    if((e.target.classList[0] === "paginator_item")) {
+        e.preventDefault();
+        const vUrlPaginator = e.target.href;
+
+        fetch(vUrlPaginator)
+        .then(response => response.json())
+        .then(data => {
+            const vList = document.getElementById("updateList");
+            vList.innerHTML = data.html;
+        })
+    }
+})

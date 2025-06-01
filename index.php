@@ -26,6 +26,8 @@ $route->post("/teste", "Web:login");
 
 // beneficiary works
 $route->get("/recipient", "App:recipientWork");
+$route->post("/recipient", "App:recipientWork");
+$route->get("/recipient/p/{page}", "App:recipientWork");
 $route->get("/see/{idWork}", "App:seeDetails");
 $route->post("/seefilter", "App:filterSee");
 $route->get("/addrecipient", "App:addRecipient");

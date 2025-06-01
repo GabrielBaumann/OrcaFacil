@@ -12,7 +12,7 @@
             </div>
             
             <!-- Body -->
-            <form id="form" action="<?= url("/registerMaterial")?>">
+            <form id="form" method="post" action="<?= url("/registerMaterial")?>">
 
                 <?= csrf_input(); ?>
                 <input hidden id="idWork" name="idWork" type="text" value="<?= $idWork; ?>"> 

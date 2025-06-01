@@ -26,10 +26,10 @@ class RecipientWork extends Model
         string $startdate,
         string $city,
         string $estate,
-        int $active = 1,
         ?string $contact = null,
         ?string $email = null,
-        ?string $observation = null
+        ?string $observation = null,
+        int $active = 1
         
     ) : RecipientWork {
         $this->id_user = $idUser;
