@@ -2,6 +2,8 @@
 
 namespace Source\App;
 
+use PDO;
+use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Auth;
@@ -11,7 +13,6 @@ use Source\Models\Unit;
 use Source\Models\User;
 use Source\Support\Message;
 use Source\Support\Pager;
-
 
 class App extends Controller
 {
@@ -620,12 +621,88 @@ class App extends Controller
 
     public function report(?array $data) : void
     {
-        echo $this->view->render("reports", [
+
+        // $total = new MaterialWork();
+        // var_dump($total->totalSpent(34));
+
+        // Gráfico de obras por status
+        $workstoStatus = Connect::getInstance()->query("
+            SELECT status_work, COUNT(id_work_recipient) AS quantidade 
+            FROM recipient_work
+            WHERE id_user = {$this->user->id_usuarios} 
+            GROUP BY status_work
+            ")->fetchAll(PDO::FETCH_OBJ);
+
+            $label = [];
+            $value = [];
+
+            foreach($workstoStatus as $item) {
+                $label[] = $item->status_work;
+                $value[] = $item->quantidade;
+            }
+
+ 
+        // Gráfico de gastos por categoria de material
+        $materialtoSpent = Connect::getInstance()->query("
+            SELECT category_material, SUM(total_value) as totalSpent
+            FROM material_work
+            WHERE id_user = {$this->user->id_usuarios}
+            GROUP BY category_material
+            ")->fetchAll(PDO::FETCH_OBJ);
+
+            $category = [];
+            $totalSpent = [];
+
+            foreach ($materialtoSpent as $item) {
+                $category[] = $item->category_material;
+                $totalSpent[] = $item->totalSpent;
+            }
+
+            $totalMoney = (new MaterialWork())
+            ->find("id_user = :id", 
+                "id={$this->user->id_usuarios}", 
+                "(SELECT SUM(total_value)) AS totalMoney")
+                ->fetch();
+            $totalWork = (new RecipientWork())
+                ->find("id_user = :id", "id={$this->user->id_usuarios}")
+                ->count();
+
+            $averageMoneyWork = 0;
+
+            if($totalWork > 0) {
+                $averageMoneyWork = $totalMoney->totalMoney / $totalWork;
+            }
+        
+            echo $this->view->render("reports", [
            "title" => "OrçaFácil - Obras",
             "usuario" => Auth::user()->nome,
             "typeAccess" => Auth::user()->type_access,
-            "recipients" => (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}")->fetch(true)
+            "labelChart" => $label,
+            "valueChart" => $value,
+            "category" => $category,
+            "totalSpent" => $totalSpent,
+            "totalWorkFinished" => (new RecipientWork())
+                ->find("id_user = :id AND status_work = 'Finalizada'", 
+                "id={$this->user->id_usuarios}")
+                ->count(),
+            "totalWork" => $totalWork,
+            "totalMoney" => $totalMoney,
+            "recipients" => (new RecipientWork())
+                ->find("id_user = :u", "u={$this->user->id_usuarios}")
+                ->fetch(true),
+            "averageMoneyWork" => $averageMoneyWork,
+            "recentWorks" => (new RecipientWork())->find("id_user = :id", "id={$this->user->id_usuarios}")->limit(5)->fetch(true)
         ]);
+    }
+
+    public function listRecentReport(?array $data) : void
+    {   
+
+        $recentWorks = (new RecipientWork())->find()->fetch(true);
+
+        echo $this->view->render("/updateAjax/listRecentWork", [
+            "recentWorks" => $recentWorks
+        ]);  
     }
 
     public function logout()

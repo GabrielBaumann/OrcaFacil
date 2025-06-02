@@ -93,7 +93,7 @@
         <?= $this->section("content"); ?>
 
     </main>
-    <script src="<?= theme("/assets/js/works/formsNewUser.js", CONF_VIEW_APP)?>"></script>
+    <script src="<?= theme("/assets/js/works/forms.js", CONF_VIEW_APP)?>"></script>
     <?= $this->section("scripts") ?>
 </body>
 </html>

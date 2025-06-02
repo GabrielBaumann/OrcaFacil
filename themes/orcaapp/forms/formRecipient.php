@@ -1,6 +1,6 @@
 <?php $this->layout("/forms/layout"); ?>
 
-<form id="form" action="<?= url("/addrecipient"); ?>" class="space-y-6">
+<form id="form" method="post" action="<?= url("/addrecipient"); ?>" class="space-y-6">
     <?= csrf_input(); ?>
     <div class="space-y-4">
         <!-- Seção de Dados Pessoais -->

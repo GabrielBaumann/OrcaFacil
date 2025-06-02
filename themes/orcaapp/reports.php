@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Total de Obras</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1">24</p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= $totalWork; ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-blue-100 text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,7 +47,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Valor Total</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1">R$ 287.450,00</p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= str_price($totalMoney->totalMoney ?? 00); ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-green-100 text-green-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,7 +63,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Obras Finalizadas</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1">8</p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= $totalWorkFinished?></p>
                 </div>
                 <div class="p-3 rounded-full bg-purple-100 text-purple-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +79,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Média por Obra</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1">R$ 11.977,08</p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= str_price($averageMoneyWork) ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-orange-100 text-orange-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,75 +165,9 @@
     </div>
 
     <!-- Tabela de Obras Recentes -->
-    <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800">Obras Recentes</h3>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Obra</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiário</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Início</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Casa Popular 42</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Maria da Silva</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Aguardando</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 12.750,00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/05/2023</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Posto de Saúde</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Prefeitura Municipal</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Em andamento</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 78.300,00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10/04/2023</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Reforma Escola</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Secretaria de Educação</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Finalizada</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 42.500,00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">05/03/2023</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Casa Família Silva</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">José Silva</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Em andamento</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 15.200,00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20/05/2023</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-            <div class="text-sm text-gray-500">Mostrando <span class="font-medium">1</span> a <span class="font-medium">4</span> de <span class="font-medium">24</span> obras</div>
-            <div class="flex space-x-2">
-                <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
+    <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">    
+        <div id="update-list">
+            <?php $this->insert("/updateAjax/listRecentWork")?>
         </div>
     </div>
 </main>
@@ -242,13 +176,15 @@
 // Inicialização dos gráficos
 document.addEventListener('DOMContentLoaded', function() {
     // Gráfico de Status das Obras
+    const statusData = <?= json_encode($valueChart) ?>;
+    const statusLabel = <?= json_encode($labelChart) ?>;
     const statusCtx = document.getElementById('statusChart').getContext('2d');
     const statusChart = new Chart(statusCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Em andamento', 'Finalizadas', 'Aguardando', 'Canceladas'],
+            labels: statusLabel,
             datasets: [{
-                data: [12, 8, 3, 1],
+                data: statusData,
                 backgroundColor: [
                     '#3b82f6', // azul
                     '#10b981', // verde
@@ -270,14 +206,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Gráfico de Gastos por Categoria
+    const vCategory = <?= json_encode($category) ?>;
+    const vTotalSpent = <?= json_encode($totalSpent) ?>;
     const categoryCtx = document.getElementById('categoryChart').getContext('2d');
     const categoryChart = new Chart(categoryCtx, {
         type: 'bar',
         data: {
-            labels: ['Hidráulica', 'Elétrica', 'Alvenaria', 'Pintura', 'Madeira', 'Outros'],
+            labels: vCategory,
             datasets: [{
                 label: 'Valor Gasto (R$)',
-                data: [45000, 38000, 72000, 28500, 32000, 71950],
+                data: vTotalSpent,
                 backgroundColor: '#2563eb',
                 borderRadius: 4
             }]
