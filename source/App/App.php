@@ -49,22 +49,20 @@ class App extends Controller
                 $params["n"] = "%{$inputSearc}%";
             }
 
-            $conditions[] = "id_user = :i";
-            $params["i"] = $this->user->id_usuarios;
+            // $conditions[] = "id_user = :i";
+            // $params["i"] = $this->user->id_usuarios;
 
             $where = implode(" AND ", $conditions);
 
             $recipentWprk = (new RecipientWork())->find($where, http_build_query($params));
-            $pager = new Pager(url("/recipient/p/"));
-            $pager->pager($recipentWprk->count(), 10, 1);
+            // $pager = new Pager(url("/recipient/p/"));
+            // $pager->pager($recipentWprk->count(), 10, 1);
 
             $html = $this->view->render("/updateAjax/listWorksRecipient", [
                 "recipients" => $recipentWprk
-                    ->limit($pager->limit())
-                    ->offset($pager->offset())
                     ->order("name_recipient")
-                    ->fetch(true),
-                "paginator" => $pager->render()
+                    ->fetch(true)
+                // "paginator" => $pager->render()
             ]);
 
             $json["html"] = $html;
@@ -75,18 +73,15 @@ class App extends Controller
         // Conteúdo das páginas
         if (isset($data["page"]) && $data["page"]) {
 
-            $recipentWprk = (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}");
-            $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
-            $pager = new Pager(url("/recipient/p/"));
-            $pager->pager($recipentWprk->count(), 10, $page);
+            $recipentWprk = (new RecipientWork())->find();
+            // $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
+            // $pager = new Pager(url("/recipient/p/"));
+            // $pager->pager($recipentWprk->count(), 10, $page);
 
             $html = $this->view->render("/updateAjax/listWorksRecipient", [
                 "recipients" => $recipentWprk
-                    ->limit($pager->limit())
-                    ->offset($pager->offset())
                     ->order("name_recipient")
-                    ->fetch(true),
-                "paginator" => $pager->render()
+                    ->fetch(true)
             ]);
 
             $json["html"] = $html;
@@ -94,10 +89,10 @@ class App extends Controller
             return;
         }
 
-        $recipentWprk = (new RecipientWork())->find("id_user = :u", "u={$this->user->id_usuarios}");
+        $recipentWprk = (new RecipientWork())->find();
         $page = (!empty($data['page']) && filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
-        $pager = new Pager(url("/recipient/p/"));
-        $pager->pager($recipentWprk->count(), 10, $page);
+        // $pager = new Pager(url("/recipient/p/"));
+        // $pager->pager($recipentWprk->count(), 10, $page);
        
 
         echo $this->view->render("works", [
@@ -105,11 +100,8 @@ class App extends Controller
             "usuario" => Auth::user()->nome,
             "typeAccess" => Auth::user()->type_access,
             "recipients" => $recipentWprk
-                ->limit($pager->limit())
-                ->offset($pager->offset())
                 ->order("name_recipient")
-                ->fetch(true),
-            "paginator" => $pager->render()
+                ->fetch(true)
         ]);
     }
 

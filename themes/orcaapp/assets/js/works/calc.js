@@ -37,3 +37,23 @@ function cleanMaskMoney(vValue) {
             .trim()
     );
 }
+
+// DataTable
+$(document).ready( function () {
+    $('#my-table').DataTable({
+        "pageLength": 10,
+        "language": {
+            "search": "Pesquisar:",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+            "infoFiltered": "(filtrando de _MAX_ entradas no total)",
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Próximo",
+                "previous": "Anterior"
+            }
+        }
+    });
+} );

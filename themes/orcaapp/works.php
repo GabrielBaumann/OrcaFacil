@@ -52,6 +52,8 @@
 </main>
 
 <?= $this->start("scripts"); ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     <script src="<?= theme("/assets/js/works/modal.js", CONF_VIEW_APP) ?>"></script>
     <script src="<?= theme("/assets/js/works/calc.js", CONF_VIEW_APP)?>"></script>
     <script src="<?= theme("/assets/js/works/forms.js", CONF_VIEW_APP)?>"></script>
