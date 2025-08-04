@@ -139,7 +139,7 @@ function passwd_verify(string $password, string $hash): bool
         $requiredFields = array_diff($allKeys, $removerFilds);
 
         foreach ($removerFilds as $field) {
-            $value = trim($data[$field]);
+            $value = mb_strtoupper(trim($data[$field]), "UTF-8");
             $value = strip_tags($value);
             $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 
@@ -158,7 +158,7 @@ function passwd_verify(string $password, string $hash): bool
         }
 
         // Remove espaços em branco
-        $value = trim($data[$field]);
+        $value = mb_strtoupper(trim($data[$field]), "UTF-8");
 
         // Se estiver vazio após o trim, é inválido
         if ($value === "") {
@@ -226,6 +226,10 @@ function formatCPF($cpf) {
 
 function str_price(string $price) : string
 {
+    if($price === "-") {
+        return $price;
+    }
+
     return  "R$ " . number_format($price, 2, ",", ".");
 }
 
@@ -247,7 +251,8 @@ function date_simple(string $date = "now", string $format = "d/m/Y"): string
  * NUMBER
  */
 
-function format_number(float|string $number): string {
+function format_number(float|string $number): string 
+{
     return str_pad($number, 3, '0', STR_PAD_LEFT);
 }
 
@@ -275,4 +280,18 @@ function mask_phone(string $phone): string
 
     // Se não for 10 ou 11 dígitos, retorna como está
     return $phone;
+}
+/**
+ * Criptografar Ids
+ */
+function encrypt_data(string $idData): string
+{
+    $key = "123456789";
+    return openssl_encrypt($idData, "AES-128-ECB", $key);
+}
+
+function decrypt_data(string $idEncrypt)
+{
+    $key = "123456789";
+    return openssl_decrypt($idEncrypt, "AES-128-ECB", $key);
 }

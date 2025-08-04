@@ -286,12 +286,15 @@ abstract class Model
 
     public function destroy() : bool
     {
+        // Pega o valor do ID e não o nome do campo do id
+        $valuePrimaryKey = $this->id;
+        $id = $this->$valuePrimaryKey;
+
         if (empty($this->id)) {
             return false;
         }
-        $id = $this->id;
 
-        $destroy = $this->delete($this->id . " = :id", "id={$this->data->$id}");
+        $destroy = $this->delete($this->id . " = :id", "id={$id}");
         return $destroy;
     }
 

@@ -9,21 +9,23 @@
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-            <?php if($recipients): ?>
-                <?php foreach($recipients as $recipient): ?>
+            <?php if($listClient): ?>
+                <?php foreach($listClient as $listClientItem): ?>
                     <tr>
                         <td data-label="Nome" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            <?= $recipient->name_recipient; ?>
+                            <?= $listClientItem->name_client; ?>
                         </td>
                         <td data-label="CPF" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                            <?= formatCPF($recipient->cpf); ?>
+                            <?= formatCPF($listClientItem->cpf_client); ?>
                         </td>
                         <td data-label="Telefone" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                            <?= $recipient->contact; ?>
+                            <?= $listClientItem->contact_client; ?>
                         </td>
                         <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                             <div class="flex justify-end space-x-3">
-                                <button data-modal="detailModal" data-url="/orcafacil/see/<?= $recipient->id_work_recipient; ?>" class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
+                                <a href="<?= url("/editarcliente/{$listClientItem->id_client}"); ?>">    
+                                    <button class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -36,5 +38,3 @@
         </tbody>
     </table>
 </div>
-<!-- Paginação -->
-<?= $paginator ?? null; ?>

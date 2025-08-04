@@ -93,19 +93,27 @@
     <header class="h-12 bg-gray-100 border-b border-gray-200 hidden sm:block">
         <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-center">
             <nav class="flex items-stretch h-full">
-                <a id="recipient"  href="<?= url("/recipient"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                
+                <a id="start"  href="<?= url("/inicio"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                    <span class="text-sm">Início</span>
+                </a>
+
+                <a id="client"  href="<?= url("/clientes"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                    <span class="text-sm">Clientes</span>
+                </a>
+
+                <a id="recipient"  href="<?= url("/obras"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Obras</span>
                 </a>
-                <a id="unit" href="<?= url("/unit"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
-                    <span class="text-sm">Unidades de medida</span>
-                </a>
-                <!-- <a href="../Categoria/index.html" class="flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
-                    <span class="text-sm">Categoria de materiais</span>
-                </a> -->
-                <a id="report" href="<?= url("/report"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+
+                <a id="report" href="<?= url("/relatorios"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Relatórios</span>
                 </a>
                 
+                <a id="setting"  href="<?= url("/recipient"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                    <span class="text-sm">Configurações</span>
+                </a>
+
                 <?php if($typeAccess == "developer"): ?>
                     <a id="user" href="<?= url("/user"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                         <span class="text-sm">Usuários</span>

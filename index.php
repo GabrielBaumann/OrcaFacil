@@ -24,6 +24,70 @@ $route->post("/teste", "Web:login");
  * APP ROUTES
  */
 
+// Start
+$route->get("/inicio", "AppStart:pageStart");
+
+
+// Client
+$route->get("/clientes", "AppClient:pageClient");
+$route->get("/cadastrarcliente", "AppClient:addClient");
+$route->post("/cadastrarcliente", "AppClient:addClient");
+$route->get("/editarcliente/{idclient}", "AppClient:addClient");
+$route->post("/cadastrarcliente/{idclient}", "AppClient:addClient");
+
+$route->get("/exluircliente", "AppClient:deleteConfirmClient");
+
+// Works
+$route->get("/obras", "AppWork:pageWork");
+$route->get("/cadastrarobra", "AppWork:addWork");
+$route->post("/cadastrarobra", "AppWork:addWork");
+$route->post("/cadastrarobra/{idwork}", "AppWork:addWork");
+$route->get("/editarobra/{idwork}", "AppWork:addWork");
+
+$route->get("/excluirobra/{idwork}", "AppWork:deleteWork");
+$route->post("/confirmarexcluirobra/{idworkdelete}", "AppWork:deleteWork");
+
+$route->get("/cadastrarobraclient/{idClient}", "AppWork:addWork");
+$route->post("/editarcadastrarobra/{idObra}", "AppWork:addWork");
+
+$route->get("/opcaoobra", "AppWork:addQuestion");
+$route->get("/clienteobra/{idWork}/{budget}", "AppWork:workClient");
+
+$route->get("/selecionaretapa/{idWork}/{expensesWork}/{budget}", "AppWork:checkStep");
+
+$route->get("/gastomaterial/{idWork}/{idSteps}/{budget}", "AppWork:expensesMaterial");
+$route->post("/gastomaterial", "AppWork:expensesMaterial");
+$route->post("/gastomaterial/{idexpense}", "AppWork:expensesMaterial");
+
+
+$route->get("/gastomaodeobra/{idWork}/{idSteps}/{budget}", "AppWork:expensesLabor");
+$route->post("/gastomaodeobra", "AppWork:expensesLabor");
+$route->post("/gastomaodeobra/{idexpense}", "AppWork:expensesLabor");
+
+$route->get("/gastoaluguelequipamento/{idWork}/{idSteps}/{budget}", "AppWork:expensesRentalEquipment");
+$route->post("/gastoaluguelequipamento", "AppWork:expensesRentalEquipment");
+$route->post("/gastoaluguelequipamento/{idexpense}", "AppWork:expensesRentalEquipment");
+
+$route->get("/gastoferramenta/{idWork}/{idSteps}/{budget}", "AppWork:expensesTool");
+$route->post("/gastoferramenta", "AppWork:expensesTool");
+$route->post("/gastoferramenta/{idexpense}", "AppWork:expensesTool");
+
+$route->get("/gastocustoadministrativo/{idWork}/{idSteps}/{budget}", "AppWork:expensesAdministrative");
+$route->post("/gastocustoadministrativo", "AppWork:expensesAdministrative");
+$route->post("/gastocustoadministrativo/{idexpense}", "AppWork:expensesAdministrative");
+
+$route->get("/editarcusto/{category}/{idexpense}/{idWork}/{idSteps}/{budget}", "AppWork:editExpenses");
+
+$route->post("/confirmardeletargastos/{category}/{idexpense}/{budget}/{idwork}", "AppWork:deleteConfirmExpenses");
+$route->post("/deletargastos", "AppWork:deleteExpenses");
+
+
+// Reports
+$route->get("/relatorios", "AppReport:pageReport");
+
+
+// Settings
+
 // beneficiary works
 $route->get("/recipient", "App:recipientWork");
 $route->post("/recipient", "App:recipientWork");
@@ -35,6 +99,8 @@ $route->post("/addrecipient", "App:addRecipient");
 $route->post("/validatecpf", "App:validateCpf");
 $route->get("/registerMaterial/{idWork}", "App:registerMaterial");
 $route->post("/registerMaterial", "App:registerMaterial");
+
+
 
 // unit
 $route->get("/unit", "App:unit");

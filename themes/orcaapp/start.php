@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Total de Obras</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= $totalWork; ?></p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= format_number($totalWork, "000"); ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-blue-100 text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,7 +63,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Obras Finalizadas</p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= $totalWorkFinished?></p>
+                    <p class="text-2xl font-semibold text-gray-800 mt-1"><?= $totalWorkFinished; ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-purple-100 text-purple-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,53 +105,34 @@
         <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Últimas Obras</h3>
             <div class="space-y-4">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">Casa da Família Silva</p>
-                        <p class="text-sm text-gray-500">R$ 15.200,00 • Em andamento</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">Reforma Escola Municipal</p>
-                        <p class="text-sm text-gray-500">R$ 42.500,00 • Finalizada</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">Posto de Saúde</p>
-                        <p class="text-sm text-gray-500">R$ 78.300,00 • Em andamento</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">Casa Popular 42</p>
-                        <p class="text-sm text-gray-500">R$ 12.750,00 • Aguardando</p>
-                    </div>
-                </div>
+                <?php if($painellastWork): ?>
+                    <?php foreach($painellastWork as $painellastWorkItem): ?>
+
+                            <!-- Manutenção -->
+                            <div class="flex items-start">
+                                <?php if($painellastWorkItem->type_work === "MANUTENÇÃO"): ?>
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">    
+                                        <img width="25" height="25" src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/external-wrench-construction-wanicon-lineal-wanicon.png" alt="external-wrench-construction-wanicon-lineal-wanicon"/>
+                                    </div>    
+                                <?php elseif($painellastWorkItem->type_work === "REFORMA"): ?>
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                        <img width="25" height="25" src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/external-builder-construction-wanicon-lineal-wanicon.png" alt="external-builder-construction-wanicon-lineal-wanicon"/>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                        <img width="25" height="25" src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/external-skyscraper-construction-wanicon-lineal-wanicon.png" alt="external-skyscraper-construction-wanicon-lineal-wanicon"/>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900"><?= $painellastWorkItem->type_work; ?> <?= $painellastWorkItem->name_work; ?></p>
+                                    <p class="text-sm text-gray-500"><?= str_price($painellastWorkItem->total_expenses); ?> • <?= $painellastWorkItem->status; ?></p>
+                                </div>
+                            </div>
+                    <?php endforeach;?>
+                <?php else:?>
+                    <p class="text-sm font-medium text-gray-900">Não há obras...</p>
+                <?php endif;?>
             </div>
         </div>
     </div>
