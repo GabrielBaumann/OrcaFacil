@@ -23,7 +23,7 @@
                         </td>
                         <td data-label="Ações" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                             <div class="flex justify-end space-x-3">
-                                <a href="<?= url("/editarcliente/{$listClientItem->id_client}"); ?>">    
+                                <a href="<?= url("/editarcliente/") . encrypt_data($listClientItem->id_client) ; ?>">    
                                     <button class="text-purple-600 hover:text-purple-800 font-medium">Ver</button>
                                 </a>
                             </div>

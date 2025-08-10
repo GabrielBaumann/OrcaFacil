@@ -282,16 +282,40 @@ function mask_phone(string $phone): string
     return $phone;
 }
 /**
- * Criptografar Ids
+ * Criptografar datas
  */
-function encrypt_data(string $idData): string
+function encrypt_data($data): string
 {
     $key = "123456789";
-    return openssl_encrypt($idData, "AES-128-ECB", $key);
+    $iv = openssl_random_pseudo_bytes(16);
+    $step = bin2hex(random_bytes(4));
+
+    $dataAll = $step . ":" . $data;
+    $crypt = openssl_encrypt($dataAll, "aes-256-cbc", $key, OPENSSL_RAW_DATA, $iv);
+
+    $payload = base64_encode($iv . $crypt);
+
+    return rtrim(strtr($payload, "+/", "-_"), "=");
 }
 
-function decrypt_data(string $idEncrypt)
+function decrypt_data($hash): string
 {
     $key = "123456789";
-    return openssl_decrypt($idEncrypt, "AES-128-ECB", $key);
+    $data = base64_decode(strtr($hash, "-_", "+/"));
+
+    if(!$data || strlen($data) < 16) {
+        return false;
+    }
+
+    $iv = substr($data, 0, 16);
+    $cript = substr($data, 16);
+
+    $decryption = openssl_decrypt($cript, "aes-256-cbc", $key, OPENSSL_RAW_DATA, $iv);
+
+    if(!$decryption || strpos($decryption, ":") === false) {
+        return false;
+    }
+
+    list($salt, $dataComplete) = explode(":", $decryption, 2);
+    return $dataComplete;
 }

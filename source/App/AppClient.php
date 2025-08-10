@@ -34,6 +34,11 @@ class AppClient extends Controller
 
     public function addClient(?array $data) : void
     {   
+        // Decriptar dados
+        if(isset($data["idclient"]) && !empty($data["idclient"])) {
+            $idClient = (int)decrypt_data($data["idclient"]);
+        }
+
         if(!empty($data["csrf"])) {
 
             $dataSanitize = cleanInputData($data, ["email"]);
@@ -59,25 +64,25 @@ class AppClient extends Controller
             );
 
             // Caso já tenha um ID significa que é uma edição e atualiza o registro
-            if(isset($data["idclient"]) && !empty($data["idclient"])) {
-                $client->id_client = $data["idclient"];
+            if(isset($idClient) && !empty($idClient)) {
+                $client->id_client = $idClient;
                 $client->id_user_system_update = 1;
             }
 
             $client->save();
 
-            if(isset($data["idclient"]) && !empty($data["idclient"])) {
+            if(isset($idClient) && !empty($idClient)) {
                 $json["message"] = $client->message()->render();
                 echo json_encode($json);
                 return;
             }
 
-            $idClient = $client->id_client;
+            $idClientCreat = $client->id_client;
 
             // Chama o modal para cadastrar obra
 
             $html = $this->view->render("/client/modalYesNo", [
-                "idClient" => $idClient ?? null
+                "idClient" => $idClientCreat ?? null
             ]);
 
             $json["html"] = $html;
@@ -98,7 +103,7 @@ class AppClient extends Controller
         echo $this->view->render("/client/formClient", [
             "default" => $defaultFormsObj,
             "locationAddress" => (new Location())->find()->order("location")->fetch(true),
-            "editClient" => (new Client())->findById($data["idclient"] ?? 0)
+            "editClient" => (new Client())->findById($idClient ?? 0)
         ]);
     }
 
