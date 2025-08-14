@@ -35,7 +35,7 @@ $route->post("/cadastrarcliente", "AppClient:addClient");
 $route->get("/editarcliente/{idclient}", "AppClient:addClient");
 $route->post("/cadastrarcliente/{idclient}", "AppClient:addClient");
 
-$route->get("/exluircliente", "AppClient:deleteConfirmClient");
+$route->post("/excluircliente/{idclient}", "AppClient:deleteConfirmClient");
 
 // Works
 $route->get("/obras", "AppWork:pageWork");

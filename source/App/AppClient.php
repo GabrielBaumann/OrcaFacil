@@ -39,6 +39,21 @@ class AppClient extends Controller
             $idClient = (int)decrypt_data($data["idclient"]);
         }
 
+        // Confirmar exclusão do cliente
+        if(($data["btn-form"] ?? null)  === "delete") {
+
+            $html = $this->view->render("/client/modalYesNoDelete", [
+                "idclient" => $data["idclient"],
+                "idexpenses" => null,
+                "budget" => null,
+                "idwork" => null
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
         if(!empty($data["csrf"])) {
 
             $dataSanitize = cleanInputData($data, ["email"]);
@@ -107,4 +122,21 @@ class AppClient extends Controller
         ]);
     }
 
+    public function deleteConfirmClient($data): void
+    {
+        $idclient = (int)decrypt_data($data["idclient"]);
+        $client = new Client();
+        $deleteClient = $client->findById($idclient);
+
+        if(!$deleteClient->destroy()) {
+            $json["message"] = messageHelpers()->warning("Erro ao excluir!Atualize a página e tente novamente.")->render();
+            echo json_encode($json);        
+            return;
+        }
+
+        $json["messge"] = messageHelpers()->success("Registro excluído com sucesso!")->flash();
+        $json["redirect"] = url("/clientes");
+        echo json_encode($json);
+        return;
+    }
 }

@@ -106,17 +106,16 @@
         <div class="modal-content">
             <button id="close-btn">x</button>
             <div class="modal-title">Confirmar Exclusão</div>
-            <p class="modal-message">Tem certeza que deseja exluir esse registro!</p>
+            <p class="modal-message">Tem certeza que deseja exluir esse cliente? Todos os dados relacionados também serão excluídos.</p>
             <div class="modal-buttons">
-                <form action="<?= url("/deletargastos/{$category}/{$idexpenses}"); ?>">
+                <form action="<?= url("/excluircliente/{$idclient}"); ?>" method="post">
                     <button
-                        data-url="<?= $urlExpenses ?? null; ?>"
                         type="submit" 
                         id="btn-add-expenses" 
                         class="modal-button confirm-button">Confirmar Exclusão
                     </button>     
                 </form>
-                <button  class="modal-button cancel-button">
+                <button id="close-btn"  class="modal-button cancel-button">
                     cancelar
                 </button>
             </div>

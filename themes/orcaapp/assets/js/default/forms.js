@@ -1,6 +1,19 @@
 /**
  * Envio de formulário de cadastro de vagas
  */
+
+// variável para recever o tipo do botão (delete, save ...)
+let btnClick = null;
+
+document.addEventListener("click", (e) => {
+    const vButton = e.target.closest("BUTTON");
+    if(vButton) {
+        if(vButton.tagName === "BUTTON" && vButton.type === "submit") {
+            btnClick = vButton
+        }
+    }
+})
+
 document.addEventListener("submit", (e) => {
     if(e.target.tagName === "FORM") {
         e.preventDefault();
@@ -11,7 +24,11 @@ document.addEventListener("submit", (e) => {
         let vtimeLoading;
 
         vtimeLoading = showSplash();
-        
+
+        if(btnClick && btnClick.name) {
+            vForm.append(btnClick.name, btnClick.value);
+        }
+
         fetch(vActionForm, {
             method: "POST",
             body: vForm

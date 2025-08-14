@@ -1,6 +1,6 @@
 <?php $this->layout("/forms/layout"); ?>
 
-<form id="form" method="post" action="<?= url("/cadastrarcliente") . (isset($editClient->id_client) ? "/" . $editClient->id_client : ""); ?>" class="space-y-6">
+<form id="form" method="post" action="<?= url("/cadastrarcliente") . (isset($editClient->id_client) ? "/" . encrypt_data($editClient->id_client) : ""); ?>" class="space-y-6">
     <?= csrf_input(); ?>
     <div class="space-y-4">
         <!-- Seção de Dados Pessoais -->
@@ -88,21 +88,21 @@
         <a href="<?= $default->url ?>" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800 inline-flex justify-center items-center transition-colors">
             Cancelar
         </a>
-        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800 inline-flex justify-center items-center transition-colors">
-            Cadastrar Cliente
+        <button name="btn-form" value="created" type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800 inline-flex justify-center items-center transition-colors">
+            <?=  isset($editClient->id_client) ? "Atualizar" : "Cadastrar Cliente"; ?>
         </button>
+
+        <?php if(isset($editClient->id_client) && !empty($editClient->id_client)): ?>                
+        
+            <!-- <form action="<?= url("/confirmardeletargastos/{$editClient->id_client}"); ?>" method="post"> -->
+                <button name="btn-form" value="delete" type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-red-800 inline-flex justify-center items-center transition-colors">
+                    Excluir
+                </button>
+            <!-- </form> -->
+
+        <?php endif; ?>
     </div>
 </form>
-
-<?php if(isset($editClient->id_client) && !empty($editClient->id_client)): ?>                
-    
-    <form action="<?= url("/confirmardeletargastos/{$editClient->id_client}"); ?>" method="post">
-        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-red-800 inline-flex justify-center items-center transition-colors">
-            Excluir
-        </button>
-    </form>
-
-<?php endif; ?>
 
 <?php $this->start("scripts") ?>
     <script src="<?= theme("/assets/js/works/mask.js", CONF_VIEW_APP)?>"></script>
