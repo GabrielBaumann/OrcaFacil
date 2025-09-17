@@ -22,10 +22,22 @@ document.addEventListener("click", (e) => {
         const vIdBudGet = document.getElementById("budget").value;
         const vStep = document.querySelectorAll("input.step-work:checked")
         const vUrl = e.target.dataset.url;
-        let vIdStep = "";
+        let vIdStep = 0;
         vStep.forEach((e) => {
             vIdStep = e.id;
         })
-        window.location.href = vUrl + "/" + vIdWork + "/" + vIdStep + "/" + vIdBudGet;
+
+        fetch(vUrl + "/" + vIdWork + "/" + vIdStep + "/" + vIdBudGet)
+        .then(response => {
+            response.json();
+        })
+        .then(data => {
+            console.log("teste");
+            if(data.message) {
+                fncMessage(data.message)
+            }
+            // window.location.href = vUrl + "/" + vIdWork + "/" + vIdStep + "/" + vIdBudGet;
+        }
+        )
     }
 });

@@ -81,9 +81,7 @@ if (vform) {
 
             if(element.innerText.includes("*") && element.nextElementSibling.value === "" && !element.classList.contains("hidden")) {
                 element.classList.add("requerid-alert");
-                console.log(element)
                 element.nextElementSibling.classList.add("requerid-alert");        
-                console.log(element.nextElementSibling)
             };
         })
     })

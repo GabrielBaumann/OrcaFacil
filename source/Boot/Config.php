@@ -14,7 +14,6 @@ define("CONF_DB_NAME", "db_bugdet");
 define("CONF_URL_BASE", "https://www.orcafacil.com.br");
 define("CONF_URL_TEST", "http://localhost/OrcaFacil");
 
-
 /**
  * DATES
  */
@@ -29,7 +28,6 @@ define("CONF_MESSAGE_WARNING", "");
 define("CONF_MESSAGE_SUCCESS", "");
 define("CONF_MESSAGE_BUTTON", "");
 define("CONF_MESSAGE_LOAD", "");
-
 
 /**
  * VIEW

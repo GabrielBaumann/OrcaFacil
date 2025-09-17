@@ -41,7 +41,7 @@ class AppWork extends Controller
     
     public function pageWork() : void
     {
-        echo $this->view->render("works", [
+        echo $this->view->render("/works/works", [
             "title" => "OrçaFácil - Obras",
             "usuario" => Auth::user()->nome ?? null,
             "typeAccess" => Auth::user()->type_access ?? null,
@@ -215,6 +215,12 @@ class AppWork extends Controller
     // Cadastrar custo com materiais
     public function expensesMaterial(?array $data) : void
     {   
+        if(isset($data["idSteps"]) && $data["idSteps"] == "0") {
+            $json["message"] = messageHelpers()->warning("Selecione uma fase da obra!")->render();
+            echo json_encode($json);
+            return;
+        }
+
         if(isset($data["budget"]) && !empty($data["budget"])) {
             $budget = (int)$data["budget"] === 1 ? "Orçamento" : "Execução";
         }

@@ -110,7 +110,7 @@
                     <span class="text-sm">Relatórios</span>
                 </a>
                 
-                <a id="setting"  href="<?= url("/recipient"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
+                <a id="sething"  href="<?= url("/configuracao"); ?>" class="sidebar-menu flex items-center justify-center px-4 sm:px-6 h-full hover:bg-gray-50 text-gray-600 hover:text-gray-900">
                     <span class="text-sm">Configurações</span>
                 </a>
 
@@ -129,7 +129,7 @@
 
     <!-- Mobile Bottom Navigation -->
     
-    <?= $this->insert("mobileBottomNavigation"); ?>
+    <?= $this->insert("/mobile/mobileBottomNavigation"); ?>
 
     <script src="<?= theme("assets/js/default/verticalbar.js", CONF_VIEW_APP) ?>"></script>
     <?= $this->section("scripts"); ?>

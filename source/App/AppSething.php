@@ -5,7 +5,7 @@ namespace Source\App;
 use Source\Core\Controller;
 use Source\Models\Auth;
 
-class AppReport extends Controller
+class AppSething extends Controller
 {
     private $user;
 
@@ -20,9 +20,9 @@ class AppReport extends Controller
 
     }
     
-    public function pageReport() : void
+    public function pageSething() : void
     {
-        echo $this->view->render("/report/report", [
+        echo $this->view->render("/sethings/sething", [
             "title" => "OrçaFácil - Clientes",
             "usuario" => Auth::user()->nome ?? null,
             "typeAccess" => Auth::user()->type_access ?? null

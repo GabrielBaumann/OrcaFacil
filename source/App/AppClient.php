@@ -6,6 +6,8 @@ use Source\Core\Controller;
 use Source\Models\Auth;
 use Source\Models\Client;
 use Source\Models\Location;
+use Source\Models\Report\Access;
+use Source\Models\Report\Online;
 
 class AppClient extends Controller
 {
@@ -19,12 +21,16 @@ class AppClient extends Controller
         //     $this->message->warning("Efetue login para acessar o sistema.")->flash();
         //     redirect("/");
         // }
+        (new Access())->report();
+        (new Online()->report());
+        $online = new Online();
+        var_dump($online->findByActive(true), $online->findByActive());
 
     }
     
     public function pageClient() : void
     {
-        echo $this->view->render("client", [
+        echo $this->view->render("/client/client", [
             "title" => "OrçaFácil - Clientes",
             "usuario" => Auth::user()->nome ?? null,
             "typeAccess" => Auth::user()->type_access ?? null,
@@ -100,6 +106,7 @@ class AppClient extends Controller
                 "idClient" => $idClientCreat ?? null
             ]);
 
+            $json["complete"] = true;
             $json["html"] = $html;
             $json["message"] = $client->message()->render();
             echo json_encode($json);

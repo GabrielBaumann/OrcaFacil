@@ -26,7 +26,6 @@ class App extends Controller
             $this->message->warning("Efetue login para acessar o sistema.")->flash();
             redirect("/");
         }
-
     }
 
     public function recipientWork(?array $data): void

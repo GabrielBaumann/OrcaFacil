@@ -6,12 +6,17 @@ use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Auth;
+use Source\Models\Report\Access;
+use Source\Models\Report\Online;
 
 class Web extends Controller
 {
     public function __construct()
     {
-        parent::__construct(__DIR__ . "/../../themes/" . CONF_VIEW_THEME . "/");        
+        parent::__construct(__DIR__ . "/../../themes/" . CONF_VIEW_THEME . "/");
+        (new Access())->report();
+        (new Online()->report());
+
     }
 
     public function login(?array $data) : void
@@ -40,7 +45,7 @@ class Web extends Controller
                 return;
             }
 
-            $json['redirected'] = url("/recipient");
+            $json['redirected'] = url("/inicio");
             echo json_encode($json);
             return;
         }

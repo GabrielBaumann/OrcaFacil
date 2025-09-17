@@ -27,7 +27,6 @@ $route->post("/teste", "Web:login");
 // Start
 $route->get("/inicio", "AppStart:pageStart");
 
-
 // Client
 $route->get("/clientes", "AppClient:pageClient");
 $route->get("/cadastrarcliente", "AppClient:addClient");
@@ -89,7 +88,7 @@ $route->get("/relatorios", "AppReport:pageReport");
 // Settings
 
 // beneficiary works
-$route->get("/recipient", "App:recipientWork");
+$route->get("/configuracao", "AppSething:pageSething");
 $route->post("/recipient", "App:recipientWork");
 $route->get("/recipient/p/{page}", "App:recipientWork");
 $route->get("/see/{idWork}", "App:seeDetails");

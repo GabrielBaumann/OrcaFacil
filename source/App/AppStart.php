@@ -2,12 +2,11 @@
 
 namespace Source\App;
 
-use PDO;
-use Source\Core\Connect;
+use Source\Models\Report\Access;
 use Source\Core\Controller;
 use Source\Models\Auth;
-use Source\Models\MaterialWork;
 use Source\Models\RecipientWork;
+use Source\Models\Report\Online;
 use Source\Models\Views\VwExpensesStepsPrice;
 use Source\Models\Views\VwGeneralExpensesPriceTotal;
 use Source\Models\Views\VwPainelWork;
@@ -27,11 +26,13 @@ class AppStart extends Controller
             redirect("/");
         }
 
+        (new Access())->report();
+        (new Online()->report());
     }
     
     public function pageStart() : void
     {
-        // var_dump(new VwPainelWork()->find()->fetch(true));
+
         // Gráfico de obras por status
         $workstoStatus = new VwStatusWork()->find()->fetch(true);
 
@@ -70,8 +71,8 @@ class AppStart extends Controller
                 $averageMoneyWork = $totalMoney->totalMoney / $totalWork;
             }
         
-            echo $this->view->render("start", [
-           "title" => "OrçaFácil - Obras",
+            echo $this->view->render("/start/start", [
+            "title" => "OrçaFácil - Obras",
             "usuario" => Auth::user()->nome,
             "typeAccess" => Auth::user()->type_access,
             "labelChart" => $label,
