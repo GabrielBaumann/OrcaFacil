@@ -67,6 +67,11 @@ function theme(?string $path = null, $theme = CONF_VIEW_THEME) : string
     return CONF_URL_BASE . "/themes/{$theme}";   
 }
 
+function is_email(string $email): bool
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
 /**
  * REQUEST
  */

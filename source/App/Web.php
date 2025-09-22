@@ -8,6 +8,7 @@ use Source\Core\Session;
 use Source\Models\Auth;
 use Source\Models\Report\Access;
 use Source\Models\Report\Online;
+use Source\Models\User;
 
 class Web extends Controller
 {
@@ -17,6 +18,45 @@ class Web extends Controller
         (new Access())->report();
         (new Online()->report());
 
+    }
+
+    public function home() : void 
+    {
+        echo $this->view->render("home", [
+            "title" => "Home"
+        ]);    
+    }
+
+    public function register(?array $data) : void
+    {       
+        if(isset($data["csrf"])) {
+            $auth = new Auth();
+            $user = new User();
+            $user->name = $data["name"];
+            $user->email = $data["mail"];
+            $user->password = $data["password"];
+            $user->save();
+
+            if ($auth->register($user)) {
+                $json["redirected"] = url("/confirmar");
+            } else {
+                $json["message"] = $auth->message()->render();
+            } 
+
+            echo json_encode($json);
+            return;
+        }
+
+        echo $this->view->render("register", [
+            "title" => "Cadastrar-se"
+        ]);    
+    }
+
+    public function registerConfirmed() : void
+    {
+        echo $this->view->render("registerconfirmed", [
+            "title" => "Falta pouco"
+        ]);    
     }
 
     public function login(?array $data) : void

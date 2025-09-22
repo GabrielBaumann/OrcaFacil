@@ -15,10 +15,12 @@ $route = new Router(url(), ":");
 // WEB ROUTES
 
 $route->namespace("Source\App");
-$route->get("/", "Web:login");
-$route->post("/", "Web:login");
-$route->post("/teste", "Web:login");
-
+$route->get("/", "Web:home");
+$route->get("/login", "Web:login");
+$route->post("/login", "Web:login");
+$route->get("/criarconta", "Web:register");
+$route->post("/criarconta", "Web:register");
+$route->get("/confirmar", "Web:registerConfirmed");
 
 /**
  * APP ROUTES

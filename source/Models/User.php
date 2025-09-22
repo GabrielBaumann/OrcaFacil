@@ -9,7 +9,7 @@ class User extends Model
     public function __construct()
     {
         parent::__construct(
-            "usuarios", ["id_usuarios"], ["id_entidade", "nome", "senha", "telefone"], "id_usuarios"
+            "user_system", ["id_user_system"], ["name", "password"], "id_user_system"
         );
     }
 

@@ -36,3 +36,16 @@ define("CONF_VIEW_PATH", __DIR__ . "/../../themes");
 define("CONF_VIEW_EXT", "php");
 define("CONF_VIEW_THEME", "orcaweb");
 define("CONF_VIEW_APP", "orcaapp");
+
+/**
+ * MAIL
+ */
+define("CONF_MAIL_HOST", "mail.syscerberus.com");
+define("CONF_MAIL_PORT", "465");
+define("CONF_MAIL_USER", "testeemail@syscerberus.com");
+define("CONF_MAIL_PASS","1900@@25081900");
+define("CONF_MAIL_SENDER", ["name" => "Orça Fácil", "address" => "testeemail@syscerberus.com"]);
+define("CONF_MAIL_OPTION_LANG", "br");
+define("CONF_MAIL_OPTION_HTML", true);
+define("CONF_MAIL_OPTION_AUTH", true);
+define("CONF_MAIL_OPTION_CHARSET", "utf-8");

@@ -8,7 +8,7 @@
         <p class="text-gray-500 text-sm mt-2">Gerencie seus orçamentos de obras de forma prática e eficiente.</p>
         </div>
 
-        <form class="space-y-5" action="<?= url("/")?>" method="post">
+        <form class="space-y-5" action="<?= url("/login")?>" method="post">
         <div><?= flash(); ?></div>
         <?= csrf_input(); ?>
         <div>

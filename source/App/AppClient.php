@@ -23,9 +23,6 @@ class AppClient extends Controller
         // }
         (new Access())->report();
         (new Online()->report());
-        $online = new Online();
-        var_dump($online->findByActive(true), $online->findByActive());
-
     }
     
     public function pageClient() : void
