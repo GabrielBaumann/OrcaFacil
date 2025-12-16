@@ -23,7 +23,7 @@ class AppStart extends Controller
 
         if (!$this->user = Auth::user()) {
             $this->message->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/");
+            redirect("/sessaoencerrada");
         }
 
         (new Access())->report();
@@ -91,6 +91,13 @@ class AppStart extends Controller
             "recentWorks" => (new RecipientWork())->find("id_user = :id", "id={$this->user->id_usuarios}")->limit(5)->fetch(true),
             "painellastWork" => new VwPainelWork()->find()->limit(5)->fetch(true) ?? null
         ]); 
+    }
+
+    public function sessionFinalized() : void
+    {   
+        echo $this->view->render("/session/sessionFinalized", [
+            "title" => "Sessão Finalizada"
+        ]);
     }
 
 }

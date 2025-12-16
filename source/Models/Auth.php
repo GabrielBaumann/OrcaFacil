@@ -33,7 +33,7 @@ class Auth extends Model
 
     public function login(string $user, string $senha) : bool
     {
-        $instanciaUser = (new User())->find("usuario = :u", "u={$user}");
+        $instanciaUser = (new User())->find("email = :u", "u={$user}");
         $user = $instanciaUser->fetch();
 
         if (!$user) {
@@ -42,19 +42,19 @@ class Auth extends Model
         }
         
         // Inserir a verificação de hash de senha
-        if ($user->senha !== $senha) {
+        if ($user->password !== $senha) {
             $this->message->error("A senha informada não confere!");
             return false;
         }
 
-        if ($user->ativo === 0) {
+        if ($user->active === 0) {
             $this->message->error("Usuário desativado do sistema!");
             return false;
         }
 
         // LOGIN
 
-        (new Session())->set("authUser", $user->id_usuarios);
+        (new Session())->set("authUser", $user->id_user_system);
         $this->message->success("Login efetuado com sucesso")->flash();
         return true;
     }
@@ -71,7 +71,7 @@ class Auth extends Model
             "name" => $user->name,
             "email" => $user->email,
             "id" => $user->id_user_system,
-            "confirm_link" => url("/brigado/" . base64_encode($user->email))
+            "confirm_link" => url("/obrigado/" . base64_encode($user->email))
         ]);
 
         (new Email())->bootstrap(

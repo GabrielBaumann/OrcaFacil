@@ -6,8 +6,6 @@ use Source\Support\Message;
 
 class Session
 {
-    private $timeout;
-
     /**
      * Session constructor.
      */
@@ -59,60 +57,6 @@ class Session
     }
 
     /**
-     * Iniciar sessão quando fizer login
-     */
-    private function initSession($timeoutMinutes = 10)
-    {   
-        $this->timeout = $timeoutMinutes * 60;
-        
-        // Se a sessão ainda não existe, configure e inicie
-        if (session_status() === PHP_SESSION_NONE) {
-            // Configurações precisam vir antes do start
-            ini_set('session.gc_maxlifetime', $this->timeout);
-            session_set_cookie_params($this->timeout);
-            session_start();
-        }
-
-        $this->checkTimeout();
-        $this->updateActivity();
-        $this->regenerateSession();
-
-    }
-
-    /**
-     *  Verifica se a sessão expirou por inatividade
-     */ 
-    private function checkTimeout() 
-    {
-        if (isset($_SESSION["LAST_ACTIVITY"])  && (time() - $_SESSION["LAST_ACTIVITY"] > $this->timeout)) {
-            $this->destroy();
-            header('Location:'. CONF_URL_TEST . '/sessaoencerrada');
-            exit;
-        }    
-    }
-
-    /**
-     * Atualiza o timestamp da última atividade
-     */
-    public function updateActivity() 
-    {
-        $_SESSION["LAST_ACTIVITY"] = time();   
-    }
-
-    /**
-     * Regenera o ID da sessão periodicamente para seguraça
-     */
-    private function regenerateSession()
-    {
-        if (!isset($_SESSION["CREATED"])) {
-            $_SESSION["CREATED"] = time();
-        } elseif (time() - $_SESSION["CREATED"] > $this->timeout) {
-            session_regenerate_id(true);
-            $_SESSION["CREATED"] = time();
-        } 
-    }
-
-    /**
      * @param string $key
      * @return Session
      */
@@ -127,8 +71,7 @@ class Session
      * @return bool
      */
     public function has(string $key): bool
-    {   
-        $this->initSession();
+    {
         return isset($_SESSION[$key]);
     }
 

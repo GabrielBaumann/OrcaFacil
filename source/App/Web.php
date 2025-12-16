@@ -59,9 +59,16 @@ class Web extends Controller
         ]);    
     }
 
+    public function confirmed() : void
+    {
+        echo $this->view->render("confirmed", [
+            "title" => "Ative sua conta"
+        ]);
+    }
+
     public function login(?array $data) : void
     {
-        
+
         if (!empty($data['csrf'])) {
 
             if(!csrf_verify($data)) {
@@ -75,7 +82,6 @@ class Web extends Controller
                 echo json_encode($json);
                 return;
             }
-            
 
             $auth = (new Auth());
 

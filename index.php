@@ -21,6 +21,7 @@ $route->post("/login", "Web:login");
 $route->get("/criarconta", "Web:register");
 $route->post("/criarconta", "Web:register");
 $route->get("/confirmar", "Web:registerConfirmed");
+$route->get("/obrigado/{email}", "Web:confirmed");
 
 /**
  * APP ROUTES
@@ -28,6 +29,7 @@ $route->get("/confirmar", "Web:registerConfirmed");
 
 // Start
 $route->get("/inicio", "AppStart:pageStart");
+$route->get("/sessaoencerrada", "AppStart:sessionFinalized");
 
 // Client
 $route->get("/clientes", "AppClient:pageClient");

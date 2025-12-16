@@ -132,6 +132,7 @@
     <?= $this->insert("/mobile/mobileBottomNavigation"); ?>
 
     <script src="<?= theme("assets/js/default/verticalbar.js", CONF_VIEW_APP) ?>"></script>
+    <script src="<?= theme("assets/js/default/default.js", CONF_VIEW_APP) ?>"></script>
     <?= $this->section("scripts"); ?>
 
 </body>

@@ -116,3 +116,21 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('modal').remove();
     }
 });
+
+// Finalizar sessão
+let timeLimited = 1 * 60 * 1000;
+let timer;
+
+function resetTimer() {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+        alert("Sessão expirada por inatividade!");
+        
+    }, timeLimited);
+}
+
+window.onload = resetTimer;
+document.onmousemove = resetTimer;
+document.onkeypress = resetTimer;
+document.onclick = resetTimer;
+document.onscroll = resetTimer;
